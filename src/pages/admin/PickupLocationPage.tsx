@@ -35,7 +35,7 @@ const PickupLocationPage: React.FC = () => {
       }
     } catch (error) {
       console.error('Error fetching pickup location settings:', error);
-      setMessage({ type: 'error', text: 'حدث خطأ أثناء تحميل إعدادات موقع الاستلام' });pdates
+      setMessage({ type: 'error', text: 'حدث خطأ أثناء تحميل إعدادات موقع الاستلام' });
     } finally {
       setLoading(false);
     }
@@ -110,8 +110,9 @@ const PickupLocationPage: React.FC = () => {
                 <GoogleMapComponent
                   latitude={settings.latitude}
                   longitude={settings.longitude}
-                  onLocationChange={handleLocationChange}
-                  isInteractive={true}
+                  onLocationSelect={handleLocationChange}
+                  isSelectable={true}
+                  zoom={15}
                 />
               </div>
 
