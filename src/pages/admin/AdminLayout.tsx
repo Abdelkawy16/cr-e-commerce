@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Tag, ShoppingBag, LogOut, Menu, X, Truck, Clock, Layers, Package, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, Tag, ShoppingBag, LogOut, Menu, X, MapPin, Package, Sun, Moon } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 interface AdminLayoutProps {
@@ -62,14 +62,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       label: 'إدارة الأزياء',
     },
     {
-      path: '/admin/collections',
-      icon: <Layers size={20} />,
-      label: 'المجموعات',
-    },
-    {
-      path: '/admin/delivery-settings',
-      icon: <Truck size={20} />,
-      label: 'إعدادات التوصيل',
+      path: '/admin/pickup-location',
+      icon: <MapPin size={20} />,
+      label: 'موقع الاستلام',
     },
   ];
 

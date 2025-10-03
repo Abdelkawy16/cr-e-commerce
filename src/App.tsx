@@ -25,7 +25,7 @@ import DashboardPage from './pages/admin/DashboardPage';
 import OrdersPage from './pages/admin/OrdersPage';
 import AdminCategoriesPage from './pages/admin/CategoriesPage';
 import AdminProductsPage from './pages/admin/ProductsPage';
-import DeliverySettingsPage from './pages/admin/DeliverySettingsPage';
+import PickupLocationPage from './pages/admin/PickupLocationPage';
 
 const App: React.FC = () => {
   return (
@@ -49,7 +49,7 @@ const App: React.FC = () => {
                   <Route key="/admin/orders" path="/admin/orders" element={<motion.div initial={{opacity:0, y:30}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-30}} transition={{duration:0.5}}><RequireAuth requireAdmin={true}><OrdersPage /></RequireAuth></motion.div>} />,
                   <Route key="/admin/categories" path="/admin/categories" element={<motion.div initial={{opacity:0, y:30}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-30}} transition={{duration:0.5}}><RequireAuth requireAdmin={true}><AdminCategoriesPage /></RequireAuth></motion.div>} />,
                   <Route key="/admin/products" path="/admin/products" element={<motion.div initial={{opacity:0, y:30}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-30}} transition={{duration:0.5}}><RequireAuth requireAdmin={true}><AdminProductsPage /></RequireAuth></motion.div>} />,
-                  <Route key="/admin/delivery-settings" path="/admin/delivery-settings" element={<motion.div initial={{opacity:0, y:30}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-30}} transition={{duration:0.5}}><RequireAuth requireAdmin={true}><DeliverySettingsPage /></RequireAuth></motion.div>} />,
+                  <Route key="/admin/pickup-location" path="/admin/pickup-location" element={<motion.div initial={{opacity:0, y:30}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-30}} transition={{duration:0.5}}><RequireAuth requireAdmin={true}><PickupLocationPage /></RequireAuth></motion.div>} />,
                   <Route key="*" path="*" element={<Navigate to="/" replace />} />
                 ]}
               </Routes>

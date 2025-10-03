@@ -43,8 +43,14 @@ export interface CartItem {
 
 export interface Customer {
   name: string;
-  address: string;
   phone: string;
+  comment?: string;
+}
+
+export interface PickupLocation {
+  latitude: number;
+  longitude: number;
+  address: string;
 }
 
 export interface Order {
@@ -53,6 +59,7 @@ export interface Order {
   customer: Customer;
   total: number;
   status: 'waiting' | 'confirmed' | 'shipped' | 'received' | 'rejected' | 'cancelled';
+  pickupLocation: PickupLocation;
   createdAt: Date;
   lastStatusChange: Date;
   comment?: string;

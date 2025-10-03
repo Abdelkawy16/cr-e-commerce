@@ -3,6 +3,7 @@ import { Save } from 'lucide-react';
 import AdminLayout from './AdminLayout';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
+import GoogleMapComponent from '../../components/common/GoogleMap';
 
 interface PickupLocationSettings {
   latitude: number;
@@ -10,10 +11,10 @@ interface PickupLocationSettings {
   address: string;
 }
 
-const DeliverySettingsPage: React.FC = () => {
+const PickupLocationPage: React.FC = () => {
   const [settings, setSettings] = useState<PickupLocationSettings>({
-    latitude: 0,
-    longitude: 0,
+    latitude: 30.0444,  // Default to Cairo coordinates
+    longitude: 31.2357,
     address: ''
   });
   const [loading, setLoading] = useState(true);
@@ -34,10 +35,18 @@ const DeliverySettingsPage: React.FC = () => {
       }
     } catch (error) {
       console.error('Error fetching pickup location settings:', error);
-      setMessage({ type: 'error', text: 'حدث خطأ أثناء تحميل إعدادات موقع الاستلام' });
+      setMessage({ type: 'error', text: 'حدث خطأ أثناء تحميل إعدادات موقع الاستلام' });pdates
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLocationChange = (lat: number, lng: number) => {
+    setSettings(prev => ({
+      ...prev,
+      latitude: lat,
+      longitude: lng
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -47,10 +56,10 @@ const DeliverySettingsPage: React.FC = () => {
 
     try {
       await setDoc(doc(db, 'settings', 'pickup'), settings);
-      setMessage({ type: 'success', text: 'تم حفظ إعدادات موقع الاستلام بنجاح' });
+      setMessage({ type: 'success', text: 'تم حفظ موقع الاستلام بنجاح' });
     } catch (error) {
       console.error('Error saving pickup location settings:', error);
-      setMessage({ type: 'error', text: 'حدث خطأ أثناء حفظ إعدادات موقع الاستلام' });
+      setMessage({ type: 'error', text: 'حدث خطأ أثناء حفظ موقع الاستلام' });
     } finally {
       setSaving(false);
     }
@@ -92,45 +101,55 @@ const DeliverySettingsPage: React.FC = () => {
                   value={settings.address}
                   onChange={(e) => setSettings(prev => ({ ...prev, address: e.target.value }))}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
+                  placeholder="العنوان التفصيلي لموقع الاستلام"
                   required
                 />
               </div>
 
-              <div>
-                <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
-                  خط العرض
-                </label>
-                <input
-                  type="number"
-                  id="latitude"
-                  value={settings.latitude}
-                  onChange={(e) => setSettings(prev => ({ ...prev, latitude: Number(e.target.value) }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
-                  step="any"
-                  required
+              <div className="h-[400px] rounded-lg overflow-hidden">
+                <GoogleMapComponent
+                  latitude={settings.latitude}
+                  longitude={settings.longitude}
+                  onLocationChange={handleLocationChange}
+                  isInteractive={true}
                 />
               </div>
 
-              <div>
-                <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
-                  خط الطول
-                </label>
-                <input
-                  type="number"
-                  id="longitude"
-                  value={settings.longitude}
-                  onChange={(e) => setSettings(prev => ({ ...prev, longitude: Number(e.target.value) }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
-                  step="any"
-                  required
-                />
+              <div className="flex gap-4">
+                <div>
+                  <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
+                    خط العرض
+                  </label>
+                  <input
+                    type="number"
+                    id="latitude"
+                    value={settings.latitude}
+                    onChange={(e) => setSettings(prev => ({ ...prev, latitude: Number(e.target.value) }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
+                    step="any"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
+                    خط الطول
+                  </label>
+                  <input
+                    type="number"
+                    id="longitude"
+                    value={settings.longitude}
+                    onChange={(e) => setSettings(prev => ({ ...prev, longitude: Number(e.target.value) }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
+                    step="any"
+                    required
+                  />
+                </div>
               </div>
 
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  يمكنك الحصول على خطوط الطول والعرض من خلال تحديد الموقع على خريطة Google Maps
-                </p>
-              </div>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                يمكنك تحديد الموقع عن طريق النقر على الخريطة أو إدخال خطوط الطول والعرض يدوياً
+              </p>
             </div>
           </div>
 
@@ -148,4 +167,4 @@ const DeliverySettingsPage: React.FC = () => {
   );
 };
 
-export default DeliverySettingsPage; 
+export default PickupLocationPage;

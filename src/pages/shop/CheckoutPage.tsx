@@ -7,7 +7,7 @@ import { useCart } from '../../context/CartContext';
 import { createOrder } from '../../firebase/orders';
 
 const CheckoutPage: React.FC = () => {
-  const { cartItems, customer, subtotal, deliveryCost, total, clearCart } = useCart();
+  const { cartItems, customer, subtotal, total, clearCart } = useCart();
   const navigate = useNavigate();
 
   // Redirect if no customer data or empty cart
@@ -91,16 +91,6 @@ const CheckoutPage: React.FC = () => {
                   <span>{subtotal.toFixed(2)} ج.م</span>
                 </div>
                 
-                <div className="flex justify-between text-gray-600 dark:text-gray-300">
-                  <span>تكلفة التوصيل</span>
-                  <span>
-                    {deliveryCost > 0 ? (
-                      `${deliveryCost.toFixed(2)} ج.م`
-                    ) : (
-                      <span className="text-success">مجاني</span>
-                    )}
-                  </span>
-                </div>
 
                 <div className="border-t pt-2 dark:border-gray-700">
                   <div className="flex justify-between font-bold text-lg">
@@ -124,11 +114,6 @@ const CheckoutPage: React.FC = () => {
                 <div>
                   <h3 className="font-semibold text-gray-700 mb-1 dark:text-gray-300">رقم الهاتف</h3>
                   <p>{customer.phone}</p>
-                </div>
-                
-                <div className="md:col-span-2">
-                  <h3 className="font-semibold text-gray-700 mb-1 dark:text-gray-300">العنوان</h3>
-                  <p>{customer.address}</p>
                 </div>
                 
                 {customer.comment && (

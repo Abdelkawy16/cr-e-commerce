@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { CartItem, Customer } from '../types';
-import { calculateDeliveryCost } from '../utils/delivery';
+import { CartItem, Customer, PickupLocation } from '../types';
+import { getPickupLocation } from '../firebase/settings';
 
 interface CartContextType {
   cartItems: CartItem[];
@@ -9,13 +9,13 @@ interface CartContextType {
   updateQuantity: (productId: string, selectedSize: string, selectedColor: string, quantity: number) => void;
   clearCart: () => void;
   subtotal: number;
-  deliveryCost: number;
   total: number;
   customer: Customer | null;
   setCustomer: (customer: Customer) => void;
   isSidebarOpen: boolean;
   openSidebar: () => void;
   closeSidebar: () => void;
+  pickupLocation: PickupLocation | null;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -44,22 +44,26 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [deliveryCost, setDeliveryCost] = useState(0);
+  const [pickupLocation, setPickupLocation] = useState<PickupLocation | null>(null);
+
+  // Fetch pickup location
+  useEffect(() => {
+    const fetchPickupLocation = async () => {
+      try {
+        const location = await getPickupLocation();
+        setPickupLocation(location);
+      } catch (error) {
+        console.error('Error fetching pickup location:', error);
+      }
+    };
+    fetchPickupLocation();
+  }, []);
 
   // Calculate subtotal
   const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
 
   // Calculate total including delivery
-  const total = subtotal + deliveryCost;
-
-  // Update delivery cost when subtotal changes
-  useEffect(() => {
-    const updateDeliveryCost = async () => {
-      const cost = await calculateDeliveryCost(subtotal);
-      setDeliveryCost(cost);
-    };
-    updateDeliveryCost();
-  }, [subtotal]);
+  const total = subtotal;
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
@@ -107,13 +111,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     updateQuantity,
     clearCart,
     subtotal,
-    deliveryCost,
     total,
     customer,
     setCustomer,
     isSidebarOpen,
     openSidebar,
     closeSidebar,
+    pickupLocation,
   };
 
   return (

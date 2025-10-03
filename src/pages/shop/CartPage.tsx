@@ -1,43 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import { ShoppingBag, ArrowRight, MapPin } from 'lucide-react';
 import Layout from '../../components/layout/Layout';
 import { useCart } from '../../context/CartContext';
 import CartItem from '../../components/shop/CartItem';
 import { motion } from 'framer-motion';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firebase/config';
 import { Customer } from '../../types';
-import { validateEgyptianPhone, formatPhoneNumber, getPhoneErrorMessage } from '../../utils/validation';
+import { formatPhoneNumber, getPhoneErrorMessage } from '../../utils/validation';
 import toast from 'react-hot-toast';
 
 const CartPage: React.FC = () => {
-  const { cartItems, removeFromCart, updateQuantity, subtotal, deliveryCost, total, customer, setCustomer } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, subtotal, total, customer, setCustomer, pickupLocation } = useCart();
   const navigate = useNavigate();
-  const [freeDeliveryThreshold, setFreeDeliveryThreshold] = useState<number>(0);
+
   const [showCustomerForm, setShowCustomerForm] = useState(false);
-  const [formData, setFormData] = useState<Customer>({
+  const [formData, setFormData] = useState<Customer & { comment?: string }>({
     name: '',
     phone: '',
-    address: '',
     comment: ''
   });
 
-  useEffect(() => {
-    const fetchDeliverySettings = async () => {
-      try {
-        const docRef = doc(db, 'settings', 'delivery');
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const settings = docSnap.data();
-          setFreeDeliveryThreshold(settings.freeDeliveryThreshold || 0);
-        }
-      } catch (error) {
-        console.error('Error fetching delivery settings:', error);
-      }
-    };
-    fetchDeliverySettings();
-  }, []);
 
   const handleCheckout = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -69,7 +51,7 @@ const CartPage: React.FC = () => {
     navigate('/checkout');
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     
     // Special handling for phone number
@@ -153,17 +135,6 @@ const CartPage: React.FC = () => {
                     <span>المجموع الفرعي</span>
                     <span>{subtotal.toFixed(2)} ج.م</span>
                   </div>
-                  
-                  <div className="flex justify-between text-gray-600 dark:text-gray-300">
-                    <span>تكلفة التوصيل</span>
-                    <span>
-                      {deliveryCost > 0 ? (
-                        `${deliveryCost.toFixed(2)} ج.م`
-                      ) : (
-                        <span className="text-success">مجاني</span>
-                      )}
-                    </span>
-                  </div>
 
                   <div className="border-t pt-4 dark:border-gray-700">
                     <div className="flex justify-between font-bold text-lg">
@@ -172,11 +143,19 @@ const CartPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {deliveryCost > 0 && (
-                    <div className="bg-primary/5 p-4 rounded-lg mt-4 dark:bg-primary-dark/20">
-                      <p className="text-sm text-primary-lighttext-primary-lightrimary-light-light">
-                        اطلب بقيمة {freeDeliveryThreshold.toFixed(2)} ج.م أو أكثر للحصول على توصيل مجاني
-                      </p>
+                  {pickupLocation && (
+                    <div className="bg-primary/5 p-4 rounded-lg dark:bg-primary-dark/20">
+                      <h3 className="font-medium text-primary dark:text-primary-light mb-2">موقع الاستلام:</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">{pickupLocation.address}</p>
+                      <button
+                        onClick={() => {
+                          window.open(`https://www.google.com/maps/search/?api=1&query=${pickupLocation.latitude},${pickupLocation.longitude}`, '_blank');
+                        }}
+                        className="text-primary hover:text-primary-dark text-sm flex items-center gap-1 mt-2"
+                      >
+                        <MapPin size={14} />
+                        عرض على الخريطة
+                      </button>
                     </div>
                   )}
 
@@ -234,17 +213,6 @@ const CartPage: React.FC = () => {
                     <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                       مثال: 01012345678
                     </p>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">العنوان</label>
-                    <input
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
-                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">ملاحظات إضافية (اختياري)</label>

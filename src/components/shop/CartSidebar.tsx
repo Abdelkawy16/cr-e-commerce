@@ -11,7 +11,7 @@ interface CartSidebarProps {
 }
 
 const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
-  const { cartItems, removeFromCart, updateQuantity, subtotal, deliveryCost, total } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, subtotal, total } = useCart();
   const navigate = useNavigate();
 
   const handleCheckout = () => {
@@ -110,12 +110,6 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
                     <span className="text-gray-600 dark:text-gray-400">المجموع الفرعي:</span>
                     <span className="font-medium text-gray-900 dark:text-gray-100">
                       {subtotal.toFixed(2)} ج.م
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">تكلفة التوصيل:</span>
-                    <span className="font-medium text-gray-900 dark:text-gray-100">
-                      {deliveryCost.toFixed(2)} ج.م
                     </span>
                   </div>
                   <div className="flex justify-between text-lg font-bold border-t border-gray-200 dark:border-gray-700 pt-2">
