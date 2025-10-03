@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Egyptian hieroglyphic-inspired pattern -->
+  <defs>
+    <pattern id="egyptian-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+      <!-- Ankh symbol -->
+      <path d="M50 20 L50 40 M40 30 L60 30 M50 40 C50 45 45 50 50 55 C55 50 50 45 50 40" 
+            fill="none" stroke="currentColor" stroke-width="2"/>
+      <!-- Eye of Horus -->
+      <path d="M20 50 C20 35 35 20 50 20 C65 20 80 35 80 50 C80 65 65 80 50 80 C35 80 20 65 20 50" 
+            fill="none" stroke="currentColor" stroke-width="2"/>
+      <!-- Scarab beetle -->
+      <path d="M70 70 C70 65 65 60 60 60 C55 60 50 65 50 70 C50 75 55 80 60 80 C65 80 70 75 70 70" 
+            fill="none" stroke="currentColor" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="100" height="100" fill="url(#egyptian-pattern)"/>
+</svg> 
