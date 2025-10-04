@@ -5,8 +5,8 @@ import { getPickupLocation } from '../firebase/settings';
 interface CartContextType {
   cartItems: CartItem[];
   addToCart: (item: CartItem) => void;
-  removeFromCart: (productId: string, selectedSize: string, selectedColor: string) => void;
-  updateQuantity: (productId: string, selectedSize: string, selectedColor: string, quantity: number) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
   subtotal: number;
   total: number;
@@ -71,10 +71,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const addToCart = (item: CartItem) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find(i => i.productId === item.productId && i.selectedSize === item.selectedSize && i.selectedColor === item.selectedColor);
+      const existingItem = prevItems.find(i => i.productId === item.productId);
       if (existingItem) {
         return prevItems.map(i =>
-          i.productId === item.productId && i.selectedSize === item.selectedSize && i.selectedColor === item.selectedColor ? { ...i, quantity: i.quantity + item.quantity } : i
+          i.productId === item.productId ? { ...i, quantity: i.quantity + item.quantity } : i
         );
       }
       return [...prevItems, item];
@@ -83,15 +83,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsSidebarOpen(true);
   };
 
-  const removeFromCart = (productId: string, selectedSize: string, selectedColor: string) => {
-    setCartItems((prevItems) => prevItems.filter(item => !(item.productId === productId && item.selectedSize === selectedSize && item.selectedColor === selectedColor)));
+  const removeFromCart = (productId: string) => {
+    setCartItems((prevItems) => prevItems.filter(item => !(item.productId === productId)));
   };
 
-  const updateQuantity = (productId: string, selectedSize: string, selectedColor: string, quantity: number) => {
+  const updateQuantity = (productId: string, quantity: number) => {
     if (quantity < 1) return;
     setCartItems((prevItems) =>
       prevItems.map(item =>
-        item.productId === productId && item.selectedSize === selectedSize && item.selectedColor === selectedColor ? { ...item, quantity } : item
+        item.productId === productId ? { ...item, quantity } : item
       )
     );
   };

@@ -117,10 +117,10 @@ const CartPage: React.FC = () => {
             <div className="lg:col-span-2 space-y-4">
               {cartItems.map((item) => (
                 <CartItem
-                  key={`${item.productId}-${item.selectedSize}-${item.selectedColor}`}
+                  key={`${item.productId}`}
                   item={item}
-                  onRemove={() => removeFromCart(item.productId, item.selectedSize, item.selectedColor)}
-                  onUpdateQuantity={(quantity: number) => updateQuantity(item.productId, item.selectedSize, item.selectedColor, quantity)}
+                  onRemove={() => removeFromCart(item.productId)}
+                  onUpdateQuantity={(quantity: number) => updateQuantity(item.productId, quantity)}
                 />
               ))}
             </div>

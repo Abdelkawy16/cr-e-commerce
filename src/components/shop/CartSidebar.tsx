@@ -89,11 +89,11 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
                 <div className="space-y-4">
                   {cartItems.map((item) => (
                     <CartItem
-                      key={`${item.productId}-${item.selectedSize}-${item.selectedColor}`}
+                      key={`${item.productId}`}
                       item={item}
                       onRemove={removeFromCart}
                       onUpdateQuantity={(quantity) => 
-                        updateQuantity(item.productId, item.selectedSize, item.selectedColor, quantity)
+                        updateQuantity(item.productId, quantity)
                       }
                     />
                   ))}

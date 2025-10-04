@@ -1083,8 +1083,6 @@ const OrdersPage: React.FC = () => {
                             <span>
                               الفئة: {categoryNames[item.categoryId] || "..."}
                             </span>
-                            <span>اللون: {item.selectedColor}</span>
-                            <span>المقاس: {item.selectedSize}</span>
                             <span>الكمية: {item.quantity}</span>
                           </div>
                           <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mt-1">

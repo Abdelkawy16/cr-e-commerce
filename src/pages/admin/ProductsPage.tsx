@@ -60,15 +60,12 @@ const ProductsPage: React.FC = () => {
     price: 0,
     discountPercentage: 0,
     discountEndDate: '',
-    sizes: [] as string[],
-    colors: [] as string[],
     categoryId: '',
     featured: false,
     inStock: true,
     images: [] as string[],
     video: '',
     videoType: 'youtube' as 'youtube' | 'vimeo' | 'mp4',
-    sizeTableImage: '',
   });
   
   const [sizeInput, setSizeInput] = useState('');
@@ -77,13 +74,6 @@ const ProductsPage: React.FC = () => {
   const [imageUrlInput, setImageUrlInput] = useState('');
   const [uploadingImages, setUploadingImages] = useState(false);
   const [isUrlInput, setIsUrlInput] = useState(false);
-  const [videoInput, setVideoInput] = useState<File | null>(null);
-  const [isVideoUrl, setIsVideoUrl] = useState(true);
-  const [uploadingVideo, setUploadingVideo] = useState(false);
-  const [sizeTableImageInput, setSizeTableImageInput] = useState<File | null>(null);
-  const [sizeTableImageUrlInput, setSizeTableImageUrlInput] = useState('');
-  const [uploadingSizeTableImage, setUploadingSizeTableImage] = useState(false);
-  const [isSizeTableUrlInput, setIsSizeTableUrlInput] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -138,14 +128,6 @@ const ProductsPage: React.FC = () => {
       [name]: newValue
     }));
   };
-
-  const handleArrayInputChange = (type: 'sizes' | 'colors' | 'images', value: string) => {
-    if (type === 'sizes') {
-      setSizeInput(value);
-    } else if (type === 'colors') {
-      setColorInput(value);
-    }
-  };
   
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -157,31 +139,6 @@ const ProductsPage: React.FC = () => {
   const handleUrlInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImageUrlInput(e.target.value);
     setIsUrlInput(true);
-  };
-
-  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      if (file.type === 'video/mp4') {
-        setVideoInput(file);
-        setIsVideoUrl(false);
-      } else {
-        toast.error('يرجى اختيار ملف فيديو بصيغة MP4 فقط');
-      }
-    }
-  };
-
-  const handleVideoUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      video: e.target.value,
-      videoType: e.target.value.includes('youtube.com') || e.target.value.includes('youtu.be')
-        ? 'youtube'
-        : e.target.value.includes('vimeo.com')
-        ? 'vimeo'
-        : 'mp4'
-    }));
-    setIsVideoUrl(true);
   };
 
   const handleAddToArray = async (type: 'sizes' | 'colors' | 'images') => {
@@ -247,21 +204,16 @@ const ProductsPage: React.FC = () => {
       price: 0,
       discountPercentage: 0,
       discountEndDate: '',
-      sizes: [],
-      colors: [],
       categoryId: '',
       featured: false,
       inStock: true,
       images: [],
       video: '',
       videoType: 'youtube',
-      sizeTableImage: '',
-    });
+      });
     setSizeInput('');
     setColorInput('');
     setImageInput(null);
-    setSizeTableImageInput(null);
-    setSizeTableImageUrlInput('');
     setIsModalOpen(true);
   };
 
@@ -290,21 +242,16 @@ const ProductsPage: React.FC = () => {
       price: product.price || 0,
       discountPercentage: product.discountPercentage || 0,
       discountEndDate: formattedDate,
-      sizes: product.sizes || [],
-      colors: product.colors || [],
       categoryId: product.categoryId || '',
       featured: product.featured || false,
       inStock: product.inStock || true,
       images: product.images || [],
       video: product.video || '',
       videoType: product.videoType || 'youtube',
-      sizeTableImage: product.sizeTableImage || '',
     });
     setSizeInput('');
     setColorInput('');
     setImageInput(null);
-    setSizeTableImageInput(null);
-    setSizeTableImageUrlInput('');
     setIsModalOpen(true);
   };
 
@@ -325,13 +272,10 @@ const ProductsPage: React.FC = () => {
         name: formData.name,
         description: formData.description,
         price: formData.price,
-        sizes: formData.sizes,
-        colors: formData.colors,
         categoryId: formData.categoryId,
         featured: formData.featured,
         inStock: formData.inStock,
         video: formData.video,
-        sizeTableImage: formData.sizeTableImage,
       };
       // Only add discountPercentage if it's a number (including 0)
       if (typeof formData.discountPercentage === 'number' && !isNaN(formData.discountPercentage)) {
@@ -384,60 +328,6 @@ const ProductsPage: React.FC = () => {
       console.error('Error deleting product:', error);
       toast.error(`حدث خطأ أثناء حذف المنتج: ${error instanceof Error ? error.message : ''}`);
     }
-  };
-
-  // Helper to get contrast color for tag background
-  const getContrastColor = (hexcolor: string): string => {
-    // If the input is not a valid hex color, return a default
-    if (!hexcolor || typeof hexcolor !== 'string' || !hexcolor.match(/^#?([a-fA-F0-9]{3}|[a-fA-F0-9]{6})$/)) {
-      return '#000000'; // Default to black for non-hex inputs
-    }
-  
-    // Remove # if it exists
-    const hex = hexcolor.replace(/^#/, '');
-
-    // Parse hex to RGB
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-
-    // Calculate luminance
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-    // Return black for light colors, white for dark colors
-    return luminance > 0.5 ? '#000000' : '#FFFFFF';
-  };
-
-  // Add handler for size table image upload
-  const handleSizeTableImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setSizeTableImageInput(e.target.files[0]);
-      setIsSizeTableUrlInput(false);
-    }
-  };
-  const handleSizeTableUrlInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSizeTableImageUrlInput(e.target.value);
-    setIsSizeTableUrlInput(true);
-  };
-  const handleAddSizeTableImage = async () => {
-    if (isSizeTableUrlInput && sizeTableImageUrlInput) {
-      setFormData(prev => ({ ...prev, sizeTableImage: sizeTableImageUrlInput }));
-      setSizeTableImageUrlInput('');
-    } else if (sizeTableImageInput) {
-      try {
-        setUploadingSizeTableImage(true);
-        const imageUrl = await uploadToCloudinary(sizeTableImageInput);
-        setFormData(prev => ({ ...prev, sizeTableImage: imageUrl }));
-        setSizeTableImageInput(null);
-      } catch (error) {
-        toast.error('حدث خطأ أثناء رفع صورة جدول المقاسات');
-      } finally {
-        setUploadingSizeTableImage(false);
-      }
-    }
-  };
-  const handleRemoveSizeTableImage = () => {
-    setFormData(prev => ({ ...prev, sizeTableImage: '' }));
   };
 
   // Handle drag end for reordering
@@ -573,25 +463,6 @@ const ProductsPage: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {product.colors && product.colors.map(color => (
-                        <span 
-                          key={color}
-                          className="px-2 py-0.5 text-xs font-semibold rounded-full truncate max-w-[80px]"
-                          style={{ backgroundColor: color, color: getContrastColor(color) }}
-                          title={color}
-                        >
-                          {color}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      {product.sizes && product.sizes.map(size => (
-                        <span key={size} className="px-2 py-0.5 text-xs bg-gray-100 text-gray-800 rounded-full dark:bg-gray-700 dark:text-gray-200">
-                          {size}
-                        </span>
-                      ))}
-                    </div>
                     <div className="flex justify-between items-center">
                       <div className="flex gap-2">
                         {product.inStock ? (
@@ -636,8 +507,6 @@ const ProductsPage: React.FC = () => {
                       <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">المنتج</th>
                       <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">السعر</th>
                       <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">الفئة</th>
-                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">المقاسات</th>
-                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">الألوان</th>
                       <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">الحالة</th>
                       <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">الإجراءات</th>
                     </tr>
@@ -686,29 +555,6 @@ const ProductsPage: React.FC = () => {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                               {(categories.find(cat => cat.id === product.categoryId)?.name) || 'غير محدد'}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                              <div className="flex flex-wrap gap-1.5">
-                                {product.sizes && product.sizes.map(size => (
-                                  <span key={size} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light">
-                                    {size}
-                                  </span>
-                                ))}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                              <div className="flex flex-wrap gap-1.5">
-                                {product.colors && product.colors.map(color => (
-                                  <span 
-                                    key={color}
-                                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium shadow-sm"
-                                    style={{ backgroundColor: color, color: getContrastColor(color) }}
-                                    title={color}
-                                  >
-                                    {color}
-                                  </span>
-                                ))}
-                              </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               {product.inStock ? (
@@ -872,83 +718,6 @@ const ProductsPage: React.FC = () => {
               {/* Variations and Images */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">المقاسات</label>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      value={sizeInput}
-                      onChange={(e) => handleArrayInputChange('sizes', e.target.value)}
-                      placeholder="أضف مقاس (مثال: S, M, L)"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleAddToArray('sizes')}
-                      className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
-                    >
-                      إضافة
-                    </button>
-                  </div>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {formData.sizes.map(size => (
-                      <span key={size} className="group inline-flex items-center px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm transition-all duration-200 hover:bg-primary/20 dark:bg-primary/20 dark:text-primary-light">
-                        {size}
-                        <button 
-                          type="button" 
-                          onClick={() => handleRemoveFromArray('sizes', size)} 
-                          className="ml-1.5 text-primary/70 hover:text-primary dark:text-primary-light/70 dark:hover:text-primary-light transition-colors"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">الألوان (كود Hex)</label>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      value={colorInput}
-                      onChange={(e) => handleArrayInputChange('colors', e.target.value)}
-                      placeholder="أضف لون (مثال: #RRGGBB)"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleAddToArray('colors')}
-                      className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
-                    >
-                      إضافة
-                    </button>
-                  </div>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {formData.colors.map(color => (
-                      <span 
-                        key={color} 
-                        className="group inline-flex items-center px-3 py-1.5 rounded-full text-sm shadow-sm transition-all duration-200"
-                        style={{ backgroundColor: color, color: getContrastColor(color) }}
-                      >
-                        {color}
-                        <button 
-                          type="button" 
-                          onClick={() => handleRemoveFromArray('colors', color)} 
-                          className="ml-1.5 opacity-70 hover:opacity-100 transition-opacity"
-                          style={{ color: getContrastColor(color) }}
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">صور المنتج</label>
                   <div className="flex items-center gap-2">
                     <button
@@ -1050,87 +819,6 @@ const ProductsPage: React.FC = () => {
                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                   يمكنك إضافة رابط فيديو من YouTube أو Vimeo
                 </p>
-              </div>
-
-              {/* Size Table Image */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">صورة جدول المقاسات</label>
-                <div className="flex items-center gap-2 mb-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsSizeTableUrlInput(false)}
-                    className={`px-4 py-2 text-sm rounded-md ${!isSizeTableUrlInput ? 'bg-primary text-white' : 'bg-gray-300 text-gray-800 dark:bg-gray-700 dark:text-gray-200'} transition-colors dark:hover:bg-gray-600`}
-                  >
-                    رفع ملف
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setIsSizeTableUrlInput(true)}
-                    className={`px-4 py-2 text-sm rounded-md ${isSizeTableUrlInput ? 'bg-primary text-white' : 'bg-gray-300 text-gray-800 dark:bg-gray-700 dark:text-gray-200'} transition-colors dark:hover:bg-gray-600`}
-                  >
-                    إضافة رابط صورة
-                  </button>
-                </div>
-                {isSizeTableUrlInput ? (
-                  <div className="flex gap-2 mb-2">
-                    <input
-                      type="text"
-                      value={sizeTableImageUrlInput}
-                      onChange={handleSizeTableUrlInputChange}
-                      placeholder="أضف رابط صورة جدول المقاسات"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAddSizeTableImage}
-                      className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
-                      disabled={uploadingSizeTableImage}
-                    >
-                      إضافة
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2 mb-2">
-                    <input
-                      type="file"
-                      id="sizeTableImage"
-                      accept="image/*"
-                      onChange={handleSizeTableImageChange}
-                      className="hidden"
-                    />
-                    <label
-                      htmlFor="sizeTableImage"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md cursor-pointer bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-600"
-                    >
-                      {sizeTableImageInput ? sizeTableImageInput.name : (
-                        <span className="flex items-center">
-                          <Upload size={18} className="ml-2" /> اختيار ملف
-                        </span>
-                      )}
-                    </label>
-                    <button
-                      type="button"
-                      onClick={handleAddSizeTableImage}
-                      className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
-                      disabled={!sizeTableImageInput || uploadingSizeTableImage}
-                    >
-                      {uploadingSizeTableImage ? 'جاري الرفع...' : 'إضافة'}
-                    </button>
-                  </div>
-                )}
-                {formData.sizeTableImage && (
-                  <div className="mt-2 relative inline-block">
-                    <img src={formData.sizeTableImage} alt="صورة جدول المقاسات" className="h-24 rounded-md border border-gray-300 dark:border-gray-600" />
-                    <button
-                      type="button"
-                      onClick={handleRemoveSizeTableImage}
-                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs font-bold"
-                      style={{ transform: 'translate(25%, -25%)' }}
-                    >
-                      &times;
-                    </button>
-                  </div>
-                )}
               </div>
 
               {/* Form Actions */}
