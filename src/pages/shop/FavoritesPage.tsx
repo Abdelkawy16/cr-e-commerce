@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Product } from '../../types';
 import { Heart, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Layout from '../../components/layout/Layout';
@@ -12,7 +13,7 @@ const FavoritesPage: React.FC = () => {
   const { favorites, removeFromFavorites } = useFavorites();
   const { addToCart } = useCart();
 
-  const handleAddToCart = (product: any) => {
+  const handleAddToCart = (product: Product) => {
     // Ensure price is a number
     const price = typeof product.price === 'string' ? parseFloat(product.price) : (product.price || 0);
     const activeDiscount = getActiveDiscount(product);
@@ -26,8 +27,7 @@ const FavoritesPage: React.FC = () => {
       discountPercentage: activeDiscount || undefined,
       image: product.images?.[0] || product.image || '',
       quantity: 1,
-      selectedSize: product.sizes?.[0] || '',
-      selectedColor: '',
+
       categoryId: product.categoryId
     });
     toast.success('تمت إضافة المنتج إلى السلة');

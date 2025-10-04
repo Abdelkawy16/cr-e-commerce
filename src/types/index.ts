@@ -9,13 +9,10 @@ export interface Product {
   price: number;
   discountPercentage?: number; // Discount percentage (0-100)
   discountEndDate?: Date; // When the discount expires
-  sizes: string[];
-  colors: string[];
   categoryId: string;
   featured?: boolean;
   inStock?: boolean;
   createdAt: Date;
-  sizeTableImage?: string; // URL for size table image
   order?: number; // Order index for manual sorting
 }
 
@@ -36,8 +33,6 @@ export interface CartItem {
   discountPercentage?: number; // Discount percentage applied
   image: string;
   quantity: number;
-  selectedSize: string;
-  selectedColor: string;
   categoryId: string;
 }
 

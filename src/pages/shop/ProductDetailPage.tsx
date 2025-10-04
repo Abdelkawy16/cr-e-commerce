@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ShoppingCart, Check, ChevronLeft, ChevronRight, Play, Heart, Share2, Copy } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { ShoppingCart, ChevronLeft, Play, Heart, Share2, Copy } from 'lucide-react';
+import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import Layout from '../../components/layout/Layout';
 import ImageLightbox from '../../components/common/ImageLightbox';
@@ -21,8 +21,6 @@ const ProductDetailPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedSize, setSelectedSize] = useState('');
-  const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -69,14 +67,6 @@ const ProductDetailPage: React.FC = () => {
           setProduct(productData);
           // Set initial active image to the first image
           setActiveImageIndex(0);
-          
-          if (productData.sizes.length > 0) {
-            setSelectedSize(productData.sizes[0]);
-          }
-          
-          if (productData.colors.length > 0) {
-            setSelectedColor(productData.colors[0]);
-          }
           
           // Fetch category
           if (productData.categoryId) {
@@ -150,15 +140,7 @@ const ProductDetailPage: React.FC = () => {
   const handleAddToCart = () => {
     if (!product) return;
     
-    if (!selectedSize && product.sizes.length > 0) {
-      toast.error('الرجاء اختيار المقاس');
-      return;
-    }
-    
-    if (!selectedColor && product.colors.length > 0) {
-      toast.error('الرجاء اختيار اللون');
-      return;
-    }
+
     
     // Ensure price is a number
     const price = typeof product.price === 'string' ? parseFloat(product.price) : (product.price || 0);
@@ -173,8 +155,7 @@ const ProductDetailPage: React.FC = () => {
       discountPercentage: activeDiscount || undefined,
       image: product.images?.[0] || product.image || '',
       quantity,
-      selectedSize,
-      selectedColor,
+
       categoryId: product.categoryId
     });
     
@@ -492,63 +473,6 @@ const ProductDetailPage: React.FC = () => {
 
             <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">{product.description}</p>
 
-            {/* Sizes */}
-            {product.sizes.length > 0 && (
-              <div>
-                <h3 className="text-base font-medium text-gray-900 mb-2 dark:text-gray-100">المقاسات</h3>
-                <div className="flex flex-wrap gap-3">
-                  {product.sizes.map((size) => (
-                    <motion.button
-                      key={size}
-                      onClick={() => setSelectedSize(size)}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium transition-all transform hover:scale-110 focus:scale-105 focus:ring-2 focus:ring-primary/40 dark:focus:ring-primary-dark/40 ${
-                        selectedSize === size 
-                          ? 'bg-primary text-white dark:bg-primary-dark shadow-lg' 
-                          : 'bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
-                      }`}
-                      whileTap={{ scale: 0.97 }}
-                    >
-                      {size}
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Size Table Image */}
-            {product.sizeTableImage && (
-              <div className="mt-6">
-                <h3 className="text-base font-medium text-gray-900 mb-2 dark:text-gray-100">جدول المقاسات</h3>
-                <img
-                  src={product.sizeTableImage}
-                  alt="جدول المقاسات"
-                  className="max-w-xs mx-auto border rounded-md shadow-sm dark:border-gray-700"
-                />
-              </div>
-            )}
-
-            {/* Colors */}
-            {product.colors.length > 0 && (
-              <div>
-                <h3 className="text-base font-medium text-gray-900 mb-2 dark:text-gray-100">الألوان</h3>
-                <div className="flex flex-wrap gap-3">
-                  {product.colors.map((color) => (
-                    <motion.button
-                      key={color}
-                      onClick={() => setSelectedColor(color)}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium transition-all transform hover:scale-110 focus:scale-105 focus:ring-2 focus:ring-primary/40 dark:focus:ring-primary-dark/40 ${
-                        selectedColor === color 
-                          ? 'bg-primary text-white dark:bg-primary-dark shadow-lg' 
-                          : 'bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
-                      }`}
-                      whileTap={{ scale: 0.97 }}
-                    >
-                      {color}
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Quantity */}
             <div>

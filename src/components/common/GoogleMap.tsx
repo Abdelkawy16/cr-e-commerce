@@ -37,7 +37,7 @@ const GoogleMapComponent: React.FC<MapProps> = ({
   };
 
   return (
-    <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY || ''}>
+    <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyAVwR9jsWhxjLnhIvWXiFDvnxdE1TuvldQ'}>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={zoom}

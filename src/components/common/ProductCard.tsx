@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Heart } from 'lucide-react';
@@ -17,8 +17,8 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
-  const { favorites, addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0] || '');
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
+
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -59,10 +59,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     e.preventDefault(); // Prevent navigation to product details
     e.stopPropagation(); // Prevent event bubbling
 
-    if (product.sizes.length > 0 && !selectedSize) {
-      toast.error('الرجاء اختيار المقاس');
-      return;
-    }
+
     
     // Ensure price is a number
     const price = typeof product.price === 'string' ? parseFloat(product.price) : (product.price || 0);
@@ -77,8 +74,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       discountPercentage: activeDiscount || undefined,
       image: product.images?.[0] || product.image || '',
       quantity: 1,
-      selectedSize,
-      selectedColor: '',
+
       categoryId: product.categoryId
     });
     

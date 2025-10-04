@@ -5,13 +5,13 @@ import { getStorage } from 'firebase/storage';
 
 // Firebase configuration - replace with your actual config
 const firebaseConfig = {
-  apiKey: "AIzaSyAhmaoCWoh7o0vViHf9Kz25RfMbydh0prQ",
-  authDomain: "e-commerce-46f71.firebaseapp.com",
-  projectId: "e-commerce-46f71",
-  storageBucket: "e-commerce-46f71.firebasestorage.app",
-  messagingSenderId: "1095341314468",
-  appId: "1:1095341314468:web:2e24708317eaa0dbb13131",
-  measurementId: "G-2GWTJ9M82W"
+  apiKey: "AIzaSyBtE4OOrfCi0rssdJGbJA341ZZ9w7YqxIs",
+  authDomain: "croatia-db.firebaseapp.com",
+  projectId: "croatia-db",
+  storageBucket: "croatia-db.firebasestorage.app",
+  messagingSenderId: "1048613128897",
+  appId: "1:1048613128897:web:a178af4514dd7acc43e240",
+  measurementId: "G-X4GHVBMDTQ"
 };
 
 // Initialize Firebase

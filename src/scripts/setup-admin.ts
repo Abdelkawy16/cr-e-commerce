@@ -1,7 +1,7 @@
 import { createAdminUser } from '../firebase/auth';
 
 // Replace these with your desired admin credentials
-const ADMIN_EMAIL = 'admin@anaka-online.com';
+const ADMIN_EMAIL = 'admin@ecommerce.com';
 const ADMIN_PASSWORD = 'Admin@123456'; // Make sure to use a strong password
 
 export const setupAdmin = async () => {

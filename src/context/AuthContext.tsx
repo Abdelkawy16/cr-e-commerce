@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
-import { doc, getDoc, enableNetwork, disableNetwork, onSnapshotsInSync } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { enableNetwork, disableNetwork, onSnapshotsInSync } from 'firebase/firestore';
 import { auth, db } from '../firebase/config';
-import { signIn, signOut, isUserAdmin } from '../firebase/auth';
+import { signIn, signOut } from '../firebase/auth';
 import { User } from '../types';
 
 interface AuthContextType {
