@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Layout from '../../components/layout/Layout';
@@ -8,20 +8,6 @@ import CategoriesShowcase from '../../components/shop/CategoriesShowcase';
 import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
-};
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
 
 const heroVariants = {
   hidden: {},
@@ -384,9 +370,9 @@ const HomePage: React.FC = () => {
                   darkBgColor: "from-blue-900/20 to-blue-800/20"
                 },
                 {
-                  icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
-                  title: "توصيل سريع",
-                  description: "نوصل طلبك بسرعة وأمان لحد باب البيت في كل أنحاء مصر",
+                  icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1",
+                  title: "سعر رخيص",
+                  description: "نقدم أسعار تنافسية وتخفيضات مستمرة لتوفير أفضل قيمة لعملائنا",
                   color: "from-green-500 to-green-600",
                   bgColor: "from-green-50 to-green-100",
                   darkBgColor: "from-green-900/20 to-green-800/20"
