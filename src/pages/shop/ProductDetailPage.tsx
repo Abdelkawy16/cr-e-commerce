@@ -415,6 +415,13 @@ const ProductDetailPage: React.FC = () => {
                 {product.featured && (
                   <span className="inline-block bg-secondary text-white text-xs px-3 py-1 rounded-full font-semibold shadow-sm">مميز</span>
                 )}
+                {product.brand && (
+                  <div
+                    className="inline-flex items-center text-[11px] font-medium bg-blue-500/10 dark:bg-blue-900/20 text-blue-500 dark:text-blue-500 px-2 py-0.5 rounded-full mr-1 hover:bg-blue-500/20 dark:hover:bg-blue-900/30 transition-colors"
+                  >
+                    <span>{product.brand}</span>
+                  </div>
+                )}
                 {category && (
                   <Link
                     to={`/products?category=${category.id}`}

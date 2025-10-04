@@ -10,6 +10,7 @@ export interface Product {
   discountPercentage?: number; // Discount percentage (0-100)
   discountEndDate?: Date; // When the discount expires
   categoryId: string;
+  brand?: string; // Brand name
   featured?: boolean;
   inStock?: boolean;
   createdAt: Date;

@@ -138,12 +138,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             }
             return null;
           })()}
+          {product.brand && (
+            <span className="absolute bottom-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+              {product.brand}
+            </span>
+          )}
         </div>
         <div className="p-4">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 transition-colors duration-300">{product.name}</h3>
           <div className="mt-2">
             {(() => {
-              // Ensure price is a number
               const price = typeof product.price === 'string' ? parseFloat(product.price) : (product.price || 0);
               const activeDiscount = getActiveDiscount(product);
               const discountedPrice = activeDiscount ? calculateDiscountedPrice(price, activeDiscount) : null;

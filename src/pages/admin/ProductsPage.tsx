@@ -61,6 +61,7 @@ const ProductsPage: React.FC = () => {
     discountPercentage: 0,
     discountEndDate: '',
     categoryId: '',
+    brand: '',
     featured: false,
     inStock: true,
     images: [] as string[],
@@ -205,6 +206,7 @@ const ProductsPage: React.FC = () => {
       discountPercentage: 0,
       discountEndDate: '',
       categoryId: '',
+      brand: '',
       featured: false,
       inStock: true,
       images: [],
@@ -243,6 +245,7 @@ const ProductsPage: React.FC = () => {
       discountPercentage: product.discountPercentage || 0,
       discountEndDate: formattedDate,
       categoryId: product.categoryId || '',
+      brand: product.brand || '',
       featured: product.featured || false,
       inStock: product.inStock || true,
       images: product.images || [],
@@ -273,6 +276,7 @@ const ProductsPage: React.FC = () => {
         description: formData.description,
         price: formData.price,
         categoryId: formData.categoryId,
+        brand: formData.brand,
         featured: formData.featured,
         inStock: formData.inStock,
         video: formData.video,
@@ -690,6 +694,17 @@ const ProductsPage: React.FC = () => {
                       <option key={category.id} value={category.id}>{category.name}</option>
                     ))}
                   </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">الماركة</label>
+                  <input
+                    type="text"
+                    name="brand"
+                    value={formData.brand}
+                    onChange={handleInputChange}
+                    placeholder="أدخل اسم الماركة"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
+                  />
                 </div>
                 <div className="flex items-center">
                   <input
