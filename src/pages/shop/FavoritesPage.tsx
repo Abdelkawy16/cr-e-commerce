@@ -24,7 +24,7 @@ const FavoritesPage: React.FC = () => {
       name: product.name,
       price: finalPrice,
       originalPrice: price,
-      discountPercentage: activeDiscount || undefined,
+      discountPercentage: activeDiscount || 0,
       image: product.images?.[0] || product.image || '',
       quantity: 1,
 
