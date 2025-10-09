@@ -4,7 +4,7 @@ import { ShoppingCart, Menu, X, User, LogOut, Sun, Moon, Heart } from 'lucide-re
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { useFavorites } from '../../context/FavoritesContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import CartSidebar from '../shop/CartSidebar';
 
@@ -65,156 +65,209 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="glass-effect sticky top-0 z-50 bg-white dark:bg-gray-800 transition-colors duration-300">
-        <div className="container mx-auto px-4 py-4">
+      <header className="sticky top-0 z-50 bg-white/90 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-100/50 dark:border-gray-700/50 transition-all duration-300 hover:shadow-sm">
+        <div className="container mx-auto px-6 py-3">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <Link to="/" className="flex items-center group">
-              <h1 ref={logoRef} className="text-2xl font-bold group-hover:scale-105 transition-transform">
+            <Link to="/" className="flex items-center group relative">
+              <motion.h1 
+                ref={logoRef} 
+                className="text-2xl font-serif font-bold tracking-wider text-gray-800 dark:text-white group-hover:text-primary transition-colors duration-300"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
                 Fitrah
-              </h1>
+              </motion.h1>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav ref={navLinksRef} className="hidden md:flex items-center gap-6">
-              <Link to="/" className="nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors">
-                Home
-              </Link>
-              <Link to="/categories" className="nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors">
-                Categories
-              </Link>
-              <Link to="/products" className="nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors">
-                Products
-              </Link>
-              {currentUser?.isAdmin && (
-                <Link to="/admin" className="nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors">
-                  Dashboard
+            <nav ref={navLinksRef} className="hidden md:flex items-center space-x-8">
+              {[
+                { to: '/', label: 'Home' },
+                { to: '/categories', label: 'Collections' },
+                { to: '/products', label: 'Shop' },
+                ...(currentUser?.isAdmin ? [{ to: '/admin', label: 'Dashboard' }] : [])
+              ].map((item) => (
+                <Link 
+                  key={item.to}
+                  to={item.to}
+                  className="relative px-1 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors duration-300 group"
+                >
+                  {item.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
                 </Link>
-              )}
+              ))}
             </nav>
 
             {/* User Actions */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center space-x-4">
               {/* Theme Toggle */}
-              <button 
+              <motion.button 
                 onClick={toggleTheme}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-full transition-all duration-300"
                 aria-label="Toggle theme"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {theme === 'light' ? (
-                  <Moon className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+                  <Moon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
                 ) : (
-                  <Sun className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+                  <Sun className="h-5 w-5 text-amber-400" />
                 )}
-              </button>
+              </motion.button>
 
-              <Link
-                to="/favorites"
-                className="relative p-2 text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
+              <motion.div 
+                className="relative"
+                whileHover={{ y: -2 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 10 }}
               >
-                <Heart className="h-6 w-6" />
-                {favorites.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {favorites.length}
-                  </span>
-                )}
-              </Link>
+                <Link
+                  to="/favorites"
+                  className="relative p-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors"
+                >
+                  <Heart className="h-5 w-5" />
+                  {favorites.length > 0 && (
+                    <motion.span 
+                      className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 10 }}
+                    >
+                      {favorites.length}
+                    </motion.span>
+                  )}
+                </Link>
+              </motion.div>
 
-              <button 
-                onClick={openSidebar}
-                className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+              <motion.div
+                className="relative"
+                whileHover={{ y: -2 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 10 }}
               >
-                <ShoppingCart className="h-6 w-6 text-gray-700 dark:text-gray-200" />
-                {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-bounce">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
+                <button 
+                  onClick={openSidebar}
+                  className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-full transition-all duration-300"
+                  aria-label="Shopping cart"
+                >
+                  <ShoppingCart className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                  {totalItems > 0 && (
+                    <motion.span 
+                      className="absolute -top-1 -right-1 bg-gradient-to-r from-primary to-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                      initial={{ scale: 0 }}
+                      animate={{ 
+                        scale: [0, 1.2, 1],
+                        rotate: [0, 10, -10, 0]
+                      }}
+                      transition={{ 
+                        type: 'spring', 
+                        stiffness: 500, 
+                        damping: 10 
+                      }}
+                    >
+                      {totalItems}
+                    </motion.span>
+                  )}
+                </button>
+              </motion.div>
 
-              {currentUser ? (
-                <div className="hidden md:flex items-center gap-6" dir="ltr" title='logout'>
+              {currentUser && (
+                <motion.div 
+                  className="hidden md:block"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <button 
                     onClick={handleLogout}
-                    className="flex items-center text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
+                    className="flex items-center text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors"
+                    title="Sign out"
                   >
-                    <LogOut className="h-5 w-5 ml-1" />
+                    <LogOut className="h-5 w-5 mr-1" />
+                    <span className="hidden lg:inline">Sign Out</span>
                   </button>
-                </div>
-              ) : (
-                null
+                </motion.div>
               )}
 
-              <button 
-                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors" 
+              <motion.button 
+                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-full transition-all duration-300" 
                 onClick={toggleMenu}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Toggle menu"
               >
-                {isMenuOpen ? <X className="h-6 w-6 text-gray-700 dark:text-gray-200" /> : <Menu className="h-6 w-6 text-gray-700 dark:text-gray-200" />}
-              </button>
+                {isMenuOpen ? (
+                  <X className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+                ) : (
+                  <Menu className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+                )}
+              </motion.button>
             </div>
           </div>
 
           {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <motion.nav 
-              className="md:hidden mt-4 space-y-2"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Link 
-                to="/" 
-                className="mobile-nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
-                onClick={toggleMenu}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.nav 
+                className="md:hidden mt-4 pt-2 pb-4 border-t border-gray-100 dark:border-gray-700"
+                initial={{ opacity: 0, height: 0, overflow: 'hidden' }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
               >
-                Home
-              </Link>
-              <Link 
-                to="/categories" 
-                className="mobile-nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
-                onClick={toggleMenu}
-              >
-                Categories
-              </Link>
-              <Link 
-                to="/products" 
-                className="mobile-nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
-                onClick={toggleMenu}
-              >
-                Products
-              </Link>
-              {currentUser?.isAdmin && (
-                <Link 
-                  to="/admin" 
-                  className="mobile-nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
-                  onClick={toggleMenu}
-                >
-                  Dashboard
-                </Link>
-              )}
-              {currentUser ? (
-                <>
-                  <div className="mobile-nav-link text-gray-700 dark:text-gray-200 flex items-center">
-                    <User className="h-6 w-6 ml-2" />
-                    <span>My Account</span>
-                  </div>
-                  <button 
-                    onClick={() => {
-                      handleLogout();
-                      toggleMenu();
-                    }}
-                    className="mobile-nav-link w-full text-right text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
-                  >
-                    <LogOut className="inline-block h-5 w-5 ml-1" />
-                    Logout
-                  </button>
-                </>
-              ) : (
-                null
-              )}
-            </motion.nav>
-          )}
+                <div className="space-y-1">
+                  {[
+                    { to: '/', label: 'Home' },
+                    { to: '/categories', label: 'Collections' },
+                    { to: '/products', label: 'Shop' },
+                    ...(currentUser?.isAdmin ? [{ to: '/admin', label: 'Dashboard' }] : []),
+                    ...(currentUser ? [
+                      { 
+                        to: '/account', 
+                        label: 'My Account',
+                        icon: <User className="h-5 w-5 mr-2" />
+                      },
+                      { 
+                        to: '#', 
+                        label: 'Sign Out',
+                        icon: <LogOut className="h-5 w-5 mr-2" />,
+                        onClick: () => {
+                          handleLogout();
+                          toggleMenu();
+                        }
+                      }
+                    ] : [])
+                  ].map((item, index) => (
+                    <motion.div
+                      key={item.to}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.05 }}
+                    >
+                      {item.to === '#' ? (
+                        <button
+                          onClick={item.onClick}
+                          className="w-full flex items-center px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-md transition-colors"
+                        >
+                          {item.icon}
+                          {item.label}
+                        </button>
+                      ) : (
+                        <Link
+                          to={item.to}
+                          onClick={toggleMenu}
+                          className="flex items-center px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-md transition-colors"
+                        >
+                          {item.icon}
+                          {item.label}
+                        </Link>
+                      )}
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.nav>
+            )}
+          </AnimatePresence>
         </div>
       </header>
       
