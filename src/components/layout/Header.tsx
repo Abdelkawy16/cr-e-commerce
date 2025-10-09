@@ -87,7 +87,7 @@ const Header: React.FC = () => {
               {[
                 { to: '/', label: 'Home' },
                 { to: '/categories', label: 'Categories' },
-                { to: '/products', label: '{Products}' },
+                { to: '/products', label: 'Products' },
                 ...(currentUser?.isAdmin ? [{ to: '/admin', label: 'Dashboard' }] : [])
               ].map((item) => (
                 <Link 
