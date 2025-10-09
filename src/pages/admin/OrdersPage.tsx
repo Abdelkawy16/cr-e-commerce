@@ -91,7 +91,13 @@ const OrdersPage: React.FC = () => {
   // Handle status update
   const handleStatusUpdate = async (
     orderId: string,
-    newStatus: 'waiting' | 'confirmed' | 'shipped' | 'received' | 'rejected' | 'cancelled'
+    newStatus:
+      | "waiting"
+      | "confirmed"
+      | "shipped"
+      | "received"
+      | "rejected"
+      | "cancelled"
   ) => {
     try {
       await updateOrderStatus(orderId, newStatus);
@@ -1053,7 +1059,6 @@ const OrdersPage: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    
                   </div>
                 </div>
               </div>
@@ -1081,9 +1086,10 @@ const OrdersPage: React.FC = () => {
                           </h5>
                           <div className="text-sm text-gray-500 dark:text-gray-400 flex flex-wrap gap-x-2">
                             <span>
-                              الفئة: {categoryNames[item.categoryId] || "..."}
+                              Category:{" "}
+                              {categoryNames[item.categoryId] || "..."}
                             </span>
-                            <span>الكمية: {item.quantity}</span>
+                            <span>Quantity: {item.quantity}</span>
                           </div>
                           <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mt-1">
                             {Number(item.price).toFixed(2)} €

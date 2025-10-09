@@ -86,8 +86,8 @@ const Header: React.FC = () => {
             <nav ref={navLinksRef} className="hidden md:flex items-center space-x-8">
               {[
                 { to: '/', label: 'Home' },
-                { to: '/categories', label: 'Collections' },
-                { to: '/products', label: 'Shop' },
+                { to: '/categories', label: 'Categories' },
+                { to: '/products', label: '{Products}' },
                 ...(currentUser?.isAdmin ? [{ to: '/admin', label: 'Dashboard' }] : [])
               ].map((item) => (
                 <Link 
@@ -218,8 +218,8 @@ const Header: React.FC = () => {
                 <div className="space-y-1">
                   {[
                     { to: '/', label: 'Home' },
-                    { to: '/categories', label: 'Collections' },
-                    { to: '/products', label: 'Shop' },
+                    { to: '/categories', label: 'Categories' },
+                    { to: '/products', label: 'Products' },
                     ...(currentUser?.isAdmin ? [{ to: '/admin', label: 'Dashboard' }] : []),
                     ...(currentUser ? [
                       { 

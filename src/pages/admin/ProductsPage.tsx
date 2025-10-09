@@ -726,7 +726,7 @@ const ProductsPage: React.FC = () => {
                     id="inStock"
                     className="h-4 w-4 text-primary-light rounded dark:bg-gray-700 dark:border-gray-600 dark:checked:bg-primary-light dark:checked:border-primary-light"
                   />
-                  <label htmlFor="inStock" className="mr-2 block text-sm text-gray-900 dark:text-gray-200">متوفر في المخزون</label>
+                  <label htmlFor="inStock" className="mr-2 block text-sm text-gray-900 dark:text-gray-200">In Stock</label>
                 </div>
               </div>
 

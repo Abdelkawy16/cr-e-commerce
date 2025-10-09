@@ -483,7 +483,7 @@ const ProductDetailPage: React.FC = () => {
 
             {/* Quantity */}
             <div>
-              <h3 className="text-base font-medium text-gray-900 mb-2 dark:text-gray-100">الكمية</h3>
+              <h3 className="text-base font-medium text-gray-900 mb-2 dark:text-gray-100">Quantity</h3>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
                   <motion.button
@@ -502,7 +502,7 @@ const ProductDetailPage: React.FC = () => {
                     +
                   </motion.button>
                 </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">متوفر في المخزون</span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">In Stock</span>
               </div>
             </div>
 
