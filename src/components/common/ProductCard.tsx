@@ -179,8 +179,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           onClick={handleAddToCart}
           className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-primary-light hover:bg-primary-light text-white rounded-md transition-colors duration-300 dark:bg-primary-dark dark:hover:bg-primary-light"
         >
+          Add to cart
           <ShoppingCart size={20} />
-          إضافة إلى السلة
         </button>
         <motion.button
           onClick={handleFavoriteClick}

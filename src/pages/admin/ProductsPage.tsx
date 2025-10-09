@@ -68,9 +68,7 @@ const ProductsPage: React.FC = () => {
     video: '',
     videoType: 'youtube' as 'youtube' | 'vimeo' | 'mp4',
   });
-  
-  const [sizeInput, setSizeInput] = useState('');
-  const [colorInput, setColorInput] = useState('');
+
   const [imageInput, setImageInput] = useState<File | null>(null);
   const [imageUrlInput, setImageUrlInput] = useState('');
   const [uploadingImages, setUploadingImages] = useState(false);
@@ -173,23 +171,10 @@ const ProductsPage: React.FC = () => {
           setUploadingImages(false);
         }
       }
-    } else {
-      const input = type === 'sizes' ? sizeInput : colorInput;
-      if (input.trim() && !(formData[type].includes(input.trim()))) {
-        setFormData(prev => ({
-          ...prev,
-          [type]: [...prev[type], input.trim()]
-        }));
-        if (type === 'sizes') {
-          setSizeInput('');
-        } else if (type === 'colors') {
-          setColorInput('');
-        }
-      }
-    }
+    } 
   };
 
-  const handleRemoveFromArray = (type: 'sizes' | 'colors' | 'images', item: string) => {
+  const handleRemoveFromArray = (type: 'images', item: string) => {
     setFormData(prev => ({
       ...prev,
       [type]: prev[type].filter(i => i !== item)
@@ -213,8 +198,6 @@ const ProductsPage: React.FC = () => {
       video: '',
       videoType: 'youtube',
       });
-    setSizeInput('');
-    setColorInput('');
     setImageInput(null);
     setIsModalOpen(true);
   };
@@ -252,8 +235,6 @@ const ProductsPage: React.FC = () => {
       video: product.video || '',
       videoType: product.videoType || 'youtube',
     });
-    setSizeInput('');
-    setColorInput('');
     setImageInput(null);
     setIsModalOpen(true);
   };

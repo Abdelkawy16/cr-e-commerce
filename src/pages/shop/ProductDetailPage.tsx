@@ -212,9 +212,9 @@ const ProductDetailPage: React.FC = () => {
       <Layout>
         <div className="container mx-auto px-4 py-16 text-gray-900 dark:text-gray-100">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">المنتج غير موجود</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Product Not Found</h1>
             <Link to="/products" className="mt-4 inline-block text-primary-light hover:text-primary-light-dark dark:text-primary-light dark:hover:text-secondary">
-              العودة إلى المنتجات
+              Back To Products
             </Link>
           </div>
         </div>
@@ -512,8 +512,8 @@ const ProductDetailPage: React.FC = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
+              Add to cart
               <ShoppingCart size={20} />
-              إضافة إلى السلة
             </motion.button>
           </motion.div>
         </div>

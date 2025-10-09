@@ -89,7 +89,7 @@ const FavoritesPage: React.FC = () => {
                 to="/products"
                 className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:bg-primary-dark dark:hover:bg-primary-light dark:focus:ring-primary-light"
               >
-                تصفح المنتجات
+                Browse Products
               </Link>
             </motion.div>
           ) : (
@@ -156,8 +156,8 @@ const FavoritesPage: React.FC = () => {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
+                        Add to cart
                         <ShoppingCart size={20} />
-                        إضافة إلى السلة
                       </motion.button>
                       <motion.button
                         onClick={() => {

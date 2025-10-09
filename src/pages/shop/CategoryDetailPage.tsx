@@ -102,23 +102,15 @@ const CategoryDetailPage: React.FC = () => {
               <ol className="inline-flex items-center space-x-1 space-x-reverse">
                 <li className="inline-flex items-center">
                   <Link to="/" className="text-gray-600 hover:text-primary-light dark:text-gray-300 dark:hover:text-primary-light">
-                    الرئيسية
+                    Home
                   </Link>
                 </li>
                 <li className="flex items-center">
                   <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
                   <Link to="/categories" className="text-gray-600 hover:text-primary-light dark:text-gray-300 dark:hover:text-primary-light">
-                    الفئات
+                    Categories
                   </Link>
                 </li>
-                {category.parentId && (
-                  <li className="flex items-center">
-                    <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
-                    <Link to={`/category/${category.parentId}`} className="text-gray-600 hover:text-primary-light dark:text-gray-300 dark:hover:text-primary-light">
-                      الفئة الأب
-                    </Link>
-                  </li>
-                )}
                 <li aria-current="page">
                   <div className="flex items-center">
                     <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
@@ -162,7 +154,7 @@ const CategoryDetailPage: React.FC = () => {
 
           {/* Products Section */}
           <div>
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">المنتجات</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">Products</h2>
             {products.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {products.map(product => (
