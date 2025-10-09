@@ -20,7 +20,6 @@ const CartPage: React.FC = () => {
     comment: ''
   });
 
-
   const handleCheckout = (e: React.MouseEvent) => {
     e.preventDefault();
     if (!customer) {
@@ -33,14 +32,14 @@ const CartPage: React.FC = () => {
   const handleCustomerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate phone number
+    // Validate phone number (9 digits, no country code)
     const phoneError = getPhoneErrorMessage(formData.phone);
     if (phoneError) {
       toast.error(phoneError);
       return;
     }
     
-    // Format phone number before saving
+    // Format phone number with +385 prefix
     const formattedCustomer = {
       ...formData,
       phone: formatPhoneNumber(formData.phone)
@@ -56,10 +55,9 @@ const CartPage: React.FC = () => {
     
     // Special handling for phone number
     if (name === 'phone') {
-      // Only allow digits
+      // Only allow digits, limit to 9 digits
       const digitsOnly = value.replace(/\D/g, '');
-      // Limit to 11 digits
-      const limitedDigits = digitsOnly.slice(0, 11);
+      const limitedDigits = digitsOnly.slice(0, 9);
       
       setFormData(prev => ({
         ...prev,
@@ -77,24 +75,24 @@ const CartPage: React.FC = () => {
   if (cartItems.length === 0) {
     return (
       <Layout>
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-6 py-16">
           <motion.div 
             className="text-center max-w-md mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="bg-gray-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 dark:bg-gray-700">
-              <ShoppingBag className="h-10 w-10 text-gray-400 dark:text-gray-300" />
+            <div className="bg-blue-100/50 dark:bg-blue-900/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+              <ShoppingBag className="h-10 w-10 text-blue-600 dark:text-blue-300" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-4 dark:text-gray-100">Your Cart is Empty</h1>
-            <p className="text-gray-600 mb-8 dark:text-gray-300">You haven't added any products to your cart yet</p>
+            <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-300 mb-4">Your Cart is Empty</h1>
+            <p className="text-gray-600 dark:text-gray-300 mb-8">Explore our latest gadgets and add them to your cart!</p>
             <Link 
               to="/products" 
-              className="btn-primary inline-flex items-center gap-2"
+              className="inline-flex items-center gap-2 bg-blue-600 dark:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold hover:bg-cyan-500 dark:hover:bg-cyan-600 transition-all duration-300"
             >
               <span>Browse Products</span>
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-5 w-5" />
             </Link>
           </motion.div>
         </div>
@@ -104,13 +102,13 @@ const CartPage: React.FC = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8 text-gray-900 dark:text-gray-100">
+      <div className="container mx-auto px-6 py-12 text-gray-900 dark:text-gray-100">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="section-title mb-8 text-gray-800 dark:text-gray-100">Shopping Cart</h1>
+          <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-300 mb-8">Shopping Cart</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Cart Items */}
@@ -127,8 +125,8 @@ const CartPage: React.FC = () => {
 
             {/* Order Summary */}
             <div className="lg:col-span-1">
-              <div className="card p-6 sticky top-24 bg-white dark:bg-gray-800">
-                <h2 className="text-xl font-bold mb-6 pb-4 border-b dark:border-gray-700">Order Summary</h2>
+              <div className="card p-6 sticky top-24 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg border border-gray-200/50 dark:border-blue-800/50 rounded-xl shadow-lg">
+                <h2 className="text-xl font-bold mb-6 pb-4 border-b border-gray-200 dark:border-blue-800 text-blue-600 dark:text-blue-300">Order Summary</h2>
                 
                 <div className="space-y-4">
                   <div className="flex justify-between text-gray-600 dark:text-gray-300">
@@ -136,24 +134,24 @@ const CartPage: React.FC = () => {
                     <span>{subtotal.toFixed(2)} €</span>
                   </div>
 
-                  <div className="border-t pt-4 dark:border-gray-700">
-                    <div className="flex justify-between font-bold text-lg">
+                  <div className="border-t pt-4 border-gray-200 dark:border-blue-800">
+                    <div className="flex justify-between font-bold text-lg text-blue-600 dark:text-blue-300">
                       <span>Total</span>
                       <span>{total.toFixed(2)} €</span>
                     </div>
                   </div>
 
                   {pickupLocation && (
-                    <div className="bg-primary/5 p-4 rounded-lg dark:bg-primary-dark/20">
-                      <h3 className="font-medium text-primary dark:text-primary-light mb-2">Pickup Location:</h3>
+                    <div className="bg-blue-100/20 dark:bg-blue-900/20 p-4 rounded-lg">
+                      <h3 className="font-medium text-blue-600 dark:text-blue-300 mb-2">Pickup Location:</h3>
                       <p className="text-sm text-gray-600 dark:text-gray-300">{pickupLocation.address}</p>
                       <button
                         onClick={() => {
                           window.open(`https://www.google.com/maps/search/?api=1&query=${pickupLocation.latitude},${pickupLocation.longitude}`, '_blank');
                         }}
-                        className="text-primary hover:text-primary-dark text-sm flex items-center gap-1 mt-2"
+                        className="text-blue-600 dark:text-blue-300 hover:text-cyan-500 dark:hover:text-cyan-300 text-sm flex items-center gap-1 mt-2 transition-colors duration-300"
                       >
-                        <MapPin size={14} />
+                        <MapPin size={16} />
                         View on Map
                       </button>
                     </div>
@@ -161,15 +159,15 @@ const CartPage: React.FC = () => {
 
                   <button
                     onClick={handleCheckout}
-                    className="btn-primary w-full text-center mt-6 flex items-center justify-center gap-2"
+                    className="w-full bg-blue-600 dark:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold hover:bg-cyan-500 dark:hover:bg-cyan-600 transition-all duration-300 flex items-center justify-center gap-2 mt-6"
                   >
                     <span>Proceed to Checkout</span>
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-5 w-5" />
                   </button>
 
                   <Link
                     to="/products"
-                    className="text-center block text-gray-600 hover:text-primary-light mt-4 transition-colors dark:text-gray-300 dark:text-primary-lightrimary-light-light"
+                    className="text-center block text-gray-600 dark:text-gray-300 hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors duration-300 mt-4"
                   >
                     Continue Shopping
                   </Link>
@@ -180,62 +178,66 @@ const CartPage: React.FC = () => {
 
           {/* Customer Information Form Modal */}
           {showCustomerForm && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white rounded-lg p-6 max-w-md w-full dark:bg-gray-800"
+                transition={{ duration: 0.3, type: 'spring', stiffness: 300 }}
+                className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg rounded-xl p-6 max-w-md w-full border border-gray-200/50 dark:border-blue-800/50"
               >
-                <h2 className="text-xl font-bold mb-6 text-gray-800 dark:text-gray-100">Delivery Information</h2>
+                <h2 className="text-xl font-bold mb-6 text-blue-600 dark:text-blue-300">Delivery Information</h2>
                 <form onSubmit={handleCustomerSubmit} className="space-y-4">
                   <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Name</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
                     <input
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-blue-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-cyan-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                     />
                   </div>
                   <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Phone Number</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      placeholder="01XXXXXXXXX"
-                      required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
-                    />
-                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                      Example: 01012345678
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
+                    <div className="flex items-center">
+                      <span className="inline-block px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-r-0 border-gray-300 dark:border-blue-800 rounded-l-lg">+385</span>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="912345678"
+                        required
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-blue-800 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-cyan-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                      Example: 912345678
                     </p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Additional Notes (Optional)</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Additional Notes (Optional)</label>
                     <textarea
                       name="comment"
                       value={formData.comment}
                       onChange={handleInputChange}
-                      rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
+                      rows={3}
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-blue-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-cyan-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                       placeholder="Any additional details about your order or delivery..."
                     />
                   </div>
                   <div className="flex gap-4 mt-6">
                     <button
                       type="submit"
-                      className="flex-1 btn-primary"
+                      className="flex-1 bg-blue-600 dark:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold hover:bg-cyan-500 dark:hover:bg-cyan-600 transition-all duration-300"
                     >
                       Continue
                     </button>
                     <button
                       type="button"
                       onClick={() => setShowCustomerForm(false)}
-                      className="flex-1 btn-secondary"
+                      className="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-6 py-2 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300"
                     >
                       Cancel
                     </button>
