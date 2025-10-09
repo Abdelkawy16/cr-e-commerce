@@ -25,12 +25,11 @@ const FavoritesPage: React.FC = () => {
       price: finalPrice,
       originalPrice: price,
       discountPercentage: activeDiscount || 0,
-      image: product.images?.[0] || product.image || '',
+      image: product.images?.[0] || product.image || 'https://via.placeholder.com/400x400?text=Product+Image',
       quantity: 1,
-
       categoryId: product.categoryId
     });
-    toast.success('تمت إضافة المنتج إلى السلة');
+    toast.success('Product added to cart', { duration: 3000 });
   };
 
   const containerVariants = {
@@ -56,7 +55,7 @@ const FavoritesPage: React.FC = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-6 py-16 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg transition-all duration-500">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -64,11 +63,18 @@ const FavoritesPage: React.FC = () => {
           className="space-y-8"
         >
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">المفضلة</h1>
+            <motion.h1 
+              className="text-4xl font-bold text-blue-600 dark:text-blue-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              Favorites
+            </motion.h1>
             <div className="flex items-center gap-2">
-              <Heart className="w-6 h-6 text-red-500 fill-red-500" />
-              <span className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                {favorites.length} منتج
+              <Heart className="w-6 h-6 text-red-500 dark:text-red-400 fill-red-500 dark:fill-red-400" />
+              <span className="text-lg font-medium text-gray-600 dark:text-gray-300">
+                {favorites.length} {favorites.length === 1 ? 'Product' : 'Products'}
               </span>
             </div>
           </div>
@@ -78,16 +84,16 @@ const FavoritesPage: React.FC = () => {
               variants={itemVariants}
               className="text-center py-16"
             >
-              <Heart className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-medium text-gray-900 dark:text-gray-100 mb-2">
-                قائمة المفضلة فارغة
+              <Heart className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-medium text-blue-600 dark:text-blue-300 mb-2">
+                Your Favorites List is Empty
               </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-8">
-                قم بإضافة منتجات إلى المفضلة لتظهر هنا
+              <p className="text-gray-600 dark:text-gray-300 mb-8">
+                Add products to your favorites to see them here.
               </p>
               <Link
                 to="/products"
-                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:bg-primary-dark dark:hover:bg-primary-light dark:focus:ring-primary-light"
+                className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 dark:bg-blue-700 text-white font-semibold rounded-full hover:bg-cyan-500 dark:hover:bg-cyan-600 transition-all duration-300"
               >
                 Browse Products
               </Link>
@@ -101,20 +107,20 @@ const FavoritesPage: React.FC = () => {
                 <motion.div
                   key={product.id}
                   variants={itemVariants}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                  className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                 >
                   <Link to={`/product/${product.id}`} className="block relative aspect-square">
                     <img
-                      src={product.images?.[0] || '/images/placeholder.jpg'}
+                      src={product.images?.[0] || 'https://via.placeholder.com/400x400?text=Product+Image'}
                       alt={product.name}
-                      className="w-full h-full object-contain p-4"
+                      className="w-full h-full object-contain p-4 rounded-t-xl"
                     />
                   </Link>
                   <div className="p-4 space-y-4">
                     <div>
                       <Link
                         to={`/product/${product.id}`}
-                        className="text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary-light"
+                        className="text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors duration-300"
                       >
                         {product.name}
                       </Link>
@@ -132,15 +138,15 @@ const FavoritesPage: React.FC = () => {
                                   <span className="text-xl font-bold text-red-600 dark:text-red-400">
                                     {discountedPrice.toFixed(2)} €
                                   </span>
-                                  <span className="text-lg font-medium text-gray-500 line-through dark:text-gray-400">
+                                  <span className="text-lg font-medium text-gray-500 dark:text-gray-400 line-through">
                                     {price.toFixed(2)} €
                                   </span>
-                                  <span className="bg-red-500 text-white text-sm px-2 py-1 rounded-full font-semibold">
+                                  <span className="bg-red-500 dark:bg-red-600 text-white text-sm px-2 py-1 rounded-full font-semibold">
                                     -{activeDiscount}%
                                   </span>
                                 </>
                               ) : (
-                                <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                                <span className="text-xl font-bold text-blue-600 dark:text-blue-300">
                                   {price.toFixed(2)} €
                                 </span>
                               )}
@@ -152,19 +158,19 @@ const FavoritesPage: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <motion.button
                         onClick={() => handleAddToCart(product)}
-                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:bg-primary-dark dark:hover:bg-primary-light dark:focus:ring-primary-light"
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg font-semibold hover:bg-cyan-500 dark:hover:bg-cyan-600 transition-all duration-300"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        Add to cart
+                        Add to Cart
                         <ShoppingCart size={20} />
                       </motion.button>
                       <motion.button
                         onClick={() => {
                           removeFromFavorites(product.id);
-                          toast.success('تمت إزالة المنتج من المفضلة');
+                          toast.success('Product removed from favorites', { duration: 3000 });
                         }}
-                        className="p-2 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
+                        className="p-2 text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors duration-300"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
@@ -182,4 +188,4 @@ const FavoritesPage: React.FC = () => {
   );
 };
 
-export default FavoritesPage; 
+export default FavoritesPage;
