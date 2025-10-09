@@ -37,53 +37,55 @@ const Header: React.FC = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    // Apply theme on initial load
+    document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
   useEffect(() => {
-    gsap.fromTo(logoRef.current, { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
+    // GSAP animations for logo and nav links
+    gsap.fromTo(
+      logoRef.current,
+      { opacity: 0, y: -30, scale: 0.9 },
+      { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power4.out' }
+    );
     if (navLinksRef.current) {
       gsap.fromTo(
         navLinksRef.current.children,
-        { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out', delay: 0.3 }
+        { opacity: 0, y: -20, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.1, ease: 'power4.out', delay: 0.3 }
       );
     }
   }, []);
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/90 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-100/50 dark:border-gray-700/50 transition-all duration-300 hover:shadow-sm">
-        <div className="container mx-auto px-6 py-3">
+      <header className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-b border-gray-200/50 dark:border-blue-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-blue-500/10">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
             <Link to="/" className="flex items-center group relative">
               <motion.h1 
                 ref={logoRef} 
-                className="text-2xl font-serif font-bold tracking-wider text-gray-800 dark:text-white group-hover:text-primary transition-colors duration-300"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: 'spring', stiffness: 300 }}
+                className="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-300 group-hover:text-cyan-500 dark:group-hover:text-cyan-300 transition-colors duration-300"
+                whileHover={{ scale: 1.05, rotate: 2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: 'spring', stiffness: 400 }}
               >
-                Fitrah
+                TechTrend
               </motion.h1>
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
+              <motion.span 
+                className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:w-full transition-all duration-500"
+                initial={{ width: 0 }}
+                whileHover={{ width: '100%' }}
+              />
             </Link>
 
             {/* Desktop Navigation */}
-            <nav ref={navLinksRef} className="hidden md:flex items-center space-x-8">
+            <nav ref={navLinksRef} className="hidden md:flex items-center space-x-10">
               {[
                 { to: '/', label: 'Home' },
                 { to: '/categories', label: 'Categories' },
@@ -93,46 +95,56 @@ const Header: React.FC = () => {
                 <Link 
                   key={item.to}
                   to={item.to}
-                  className="relative px-1 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors duration-300 group"
+                  className="relative px-2 py-2 text-base font-semibold text-gray-700 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors duration-300 group"
                 >
                   {item.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
+                  <motion.span 
+                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:w-full transition-all duration-300"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: '100%' }}
+                  />
                 </Link>
               ))}
             </nav>
 
             {/* User Actions */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-6">
               {/* Theme Toggle */}
               <motion.button 
                 onClick={toggleTheme}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-full transition-all duration-300"
+                className="p-2 hover:bg-blue-100/50 dark:hover:bg-blue-800/50 rounded-full transition-all duration-300"
                 aria-label="Toggle theme"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.1, rotate: 15 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: 'spring', stiffness: 400 }}
               >
-                {theme === 'light' ? (
-                  <Moon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-                ) : (
-                  <Sun className="h-5 w-5 text-amber-400" />
-                )}
+                <motion.div
+                  animate={{ rotate: theme === 'dark' ? 360 : 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {theme === 'light' ? (
+                    <Moon className="h-6 w-6 text-blue-600 dark:text-blue-300" />
+                  ) : (
+                    <Sun className="h-6 w-6 text-amber-400" />
+                  )}
+                </motion.div>
               </motion.button>
 
               <motion.div 
                 className="relative"
-                whileHover={{ y: -2 }}
+                whileHover={{ y: -3, scale: 1.05 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 10 }}
               >
                 <Link
                   to="/favorites"
-                  className="relative p-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors"
+                  className="relative p-2 text-blue-600 dark:text-blue-300 hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors"
                 >
-                  <Heart className="h-5 w-5" />
+                  <Heart className="h-6 w-6" />
                   {favorites.length > 0 && (
                     <motion.span 
-                      className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                      className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
                       initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
+                      animate={{ scale: 1, rotate: [0, 10, -10, 0] }}
                       transition={{ type: 'spring', stiffness: 500, damping: 10 }}
                     >
                       {favorites.length}
@@ -143,26 +155,26 @@ const Header: React.FC = () => {
 
               <motion.div
                 className="relative"
-                whileHover={{ y: -2 }}
+                whileHover={{ y: -3, scale: 1.05 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 10 }}
               >
                 <button 
                   onClick={openSidebar}
-                  className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-full transition-all duration-300"
+                  className="relative p-2 hover:bg-blue-100/50 dark:hover:bg-blue-800/50 rounded-full transition-all duration-300"
                   aria-label="Shopping cart"
                 >
-                  <ShoppingCart className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                  <ShoppingCart className="h-6 w-6 text-blue-600 dark:text-blue-300" />
                   {totalItems > 0 && (
                     <motion.span 
-                      className="absolute -top-1 -right-1 bg-gradient-to-r from-primary to-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                      className="absolute -top-2 -right-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
                       initial={{ scale: 0 }}
                       animate={{ 
-                        scale: [0, 1.2, 1],
-                        rotate: [0, 10, -10, 0]
+                        scale: [0, 1.3, 1],
+                        rotate: [0, 15, -15, 0]
                       }}
                       transition={{ 
                         type: 'spring', 
-                        stiffness: 500, 
+                        stiffness: 600, 
                         damping: 10 
                       }}
                     >
@@ -174,32 +186,32 @@ const Header: React.FC = () => {
 
               {currentUser && (
                 <motion.div 
-                  className="hidden md:block"
+                  className="hidden md:flex items-center"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <button 
                     onClick={handleLogout}
-                    className="flex items-center text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors"
+                    className="flex items-center text-sm font-semibold text-blue-600 dark:text-blue-300 hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors"
                     title="Sign out"
                   >
-                    <LogOut className="h-5 w-5 mr-1" />
+                    <LogOut className="h-6 w-6 mr-2" />
                     <span className="hidden lg:inline">Sign Out</span>
                   </button>
                 </motion.div>
               )}
 
               <motion.button 
-                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-full transition-all duration-300" 
+                className="md:hidden p-2 hover:bg-blue-100/50 dark:hover:bg-blue-800/50 rounded-full transition-all duration-300" 
                 onClick={toggleMenu}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.1, rotate: 10 }}
+                whileTap={{ scale: 0.9 }}
                 aria-label="Toggle menu"
               >
                 {isMenuOpen ? (
-                  <X className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+                  <X className="h-7 w-7 text-blue-600 dark:text-blue-300" />
                 ) : (
-                  <Menu className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+                  <Menu className="h-7 w-7 text-blue-600 dark:text-blue-300" />
                 )}
               </motion.button>
             </div>
@@ -209,13 +221,13 @@ const Header: React.FC = () => {
           <AnimatePresence>
             {isMenuOpen && (
               <motion.nav 
-                className="md:hidden mt-4 pt-2 pb-4 border-t border-gray-100 dark:border-gray-700"
+                className="md:hidden mt-4 pt-4 pb-6 bg-white/95 dark:bg-gray-900/95 border-t border-blue-200/50 dark:border-blue-800/50 rounded-b-xl"
                 initial={{ opacity: 0, height: 0, overflow: 'hidden' }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
               >
-                <div className="space-y-1">
+                <div className="space-y-2 px-4">
                   {[
                     { to: '/', label: 'Home' },
                     { to: '/categories', label: 'Categories' },
@@ -225,12 +237,12 @@ const Header: React.FC = () => {
                       { 
                         to: '/account', 
                         label: 'My Account',
-                        icon: <User className="h-5 w-5 mr-2" />
+                        icon: <User className="h-5 w-5 mr-3 text-blue-600 dark:text-blue-300" />
                       },
                       { 
                         to: '#', 
                         label: 'Sign Out',
-                        icon: <LogOut className="h-5 w-5 mr-2" />,
+                        icon: <LogOut className="h-5 w-5 mr-3 text-blue-600 dark:text-blue-300" />,
                         onClick: () => {
                           handleLogout();
                           toggleMenu();
@@ -240,14 +252,14 @@ const Header: React.FC = () => {
                   ].map((item, index) => (
                     <motion.div
                       key={item.to}
-                      initial={{ x: -20, opacity: 0 }}
+                      initial={{ x: -30, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.05 }}
+                      transition={{ delay: index * 0.1, type: 'spring', stiffness: 300 }}
                     >
                       {item.to === '#' ? (
                         <button
                           onClick={item.onClick}
-                          className="w-full flex items-center px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-md transition-colors"
+                          className="w-full flex items-center px-4 py-3 text-base font-semibold text-gray-700 dark:text-gray-200 hover:bg-blue-100/50 dark:hover:bg-blue-800/50 rounded-lg transition-colors duration-300"
                         >
                           {item.icon}
                           {item.label}
@@ -256,7 +268,7 @@ const Header: React.FC = () => {
                         <Link
                           to={item.to}
                           onClick={toggleMenu}
-                          className="flex items-center px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-md transition-colors"
+                          className="w-full flex items-center px-4 py-3 text-base font-semibold text-gray-700 dark:text-gray-200 hover:bg-blue-100/50 dark:hover:bg-blue-800/50 rounded-lg transition-colors duration-300"
                         >
                           {item.icon}
                           {item.label}

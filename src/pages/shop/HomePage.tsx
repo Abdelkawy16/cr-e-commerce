@@ -157,8 +157,8 @@ const HomePage: React.FC = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Hero Section with Modern Design */}
-        <section className="relative min-h-screen flex items-center overflow-hidden bg-gray-900">
+        {/* Hero Section with Modern Electronics Design */}
+        <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
           {/* Background image slider */}
           {images.map((image, index) => (
             <motion.div 
@@ -166,38 +166,38 @@ const HomePage: React.FC = () => {
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
               style={{ 
                 backgroundImage: `url(${image})`,
-                filter: 'brightness(0.5)',
+                filter: 'brightness(0.6) contrast(1.1)',
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: currentImage === index ? 1 : 0 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 1.2, ease: 'easeInOut' }}
             />
           ))}
           
           {/* Decorative elements with enhanced animations */}
           <motion.div
-            className="absolute top-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"
+            className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
             animate={{
-              x: [0, 100, 0],
-              y: [0, 50, 0],
-              scale: [1, 1.2, 1],
+              x: [0, 120, 0],
+              y: [0, 60, 0],
+              scale: [1, 1.3, 1],
             }}
             transition={{
-              duration: 8,
+              duration: 7,
               repeat: Infinity,
               ease: "easeInOut"
             }}
             style={{ zIndex: 1 }}
           />
           <motion.div
-            className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-secondary-light/10 rounded-full blur-3xl"
+            className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-3xl"
             animate={{
-              x: [0, -100, 0],
-              y: [0, -50, 0],
-              scale: [1, 1.2, 1],
+              x: [0, -120, 0],
+              y: [0, -60, 0],
+              scale: [1, 1.3, 1],
             }}
             transition={{
-              duration: 10,
+              duration: 9,
               repeat: Infinity,
               ease: "easeInOut"
             }}
@@ -206,55 +206,55 @@ const HomePage: React.FC = () => {
           {/* Floating animated decorative element */}
           <motion.div
             ref={floatingRef}
-            className="absolute left-1/2 top-1/3 w-32 h-32 bg-primary/20 rounded-full blur-2xl pointer-events-none"
+            className="absolute left-1/2 top-1/3 w-40 h-40 bg-blue-600/20 rounded-full blur-2xl pointer-events-none"
             style={{ x: '-50%' }}
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.5 }}
+            transition={{ duration: 1.5, delay: 0.3 }}
           />
 
           {/* Content */}
-          <div className="relative z-10 container mx-auto px-4 flex justify-end">
+          <div className="relative z-10 container mx-auto px-4 flex justify-center">
             <motion.div
-              className="max-w-3xl text-white text-right"
+              className="max-w-4xl text-white text-center"
               variants={heroVariants}
               initial="hidden"
               animate="visible"
             >
               <motion.h1
                 ref={heroTitleRef}
-                className="text-7xl font-bold mb-6 leading-tight"
+                className="text-6xl md:text-8xl font-extrabold mb-6 leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300"
                 style={{ opacity: 0 }}
                 variants={heroItem}
               >
-                Islamic Fashion with a Modern Touch
+                TechTrend Innovations
               </motion.h1>
               <motion.p
                 ref={heroSubtitleRef}
-                className="text-2xl mb-8 leading-relaxed max-w-2xl"
+                className="text-xl md:text-3xl mb-10 leading-relaxed max-w-3xl mx-auto"
                 style={{ opacity: 0 }}
                 variants={heroItem}
               >
-                A unique collection of modest women's clothing with the latest designs and colors
+                Discover cutting-edge electronics and gadgets for a smarter lifestyle
               </motion.p>
               <motion.div
                 ref={heroButtonsRef}
-                className="flex justify-start gap-4"
+                className="flex justify-center gap-6"
                 style={{ opacity: 0 }}
                 variants={heroItem}
               >
                 <Link to="/products">
                   <button
-                    className="bg-primary hover:bg-primary-dark text-white px-10 py-4 rounded-full text-xl font-semibold transition-all duration-300 shadow-lg"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-12 py-4 rounded-full text-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   >
                     Shop Now
                   </button>
                 </Link>
                 <Link to="/categories">
                   <button
-                    className="bg-white/30 hover:bg-white/40 text-white px-10 py-4 rounded-full text-xl font-semibold transition-all duration-300 backdrop-blur-sm"
+                    className="bg-white/20 hover:bg-white/30 text-white px-12 py-4 rounded-full text-xl font-semibold transition-all duration-300 backdrop-blur-sm border border-white/30"
                   >
-                    Browse Categories
+                    Explore Categories
                   </button>
                 </Link>
               </motion.div>
@@ -267,40 +267,40 @@ const HomePage: React.FC = () => {
             style={{ opacity, scale }}
           >
             <motion.div
-              animate={{ y: [0, 10, 0] }}
+              animate={{ y: [0, 12, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-6 h-10 border-2 border-white rounded-full flex justify-center"
+              className="w-6 h-12 border-2 border-blue-300 rounded-full flex justify-center"
             >
               <motion.div
-                animate={{ y: [0, 12, 0] }}
+                animate={{ y: [0, 14, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
-                className="w-1 h-2 bg-white rounded-full mt-2"
+                className="w-1.5 h-2.5 bg-blue-300 rounded-full mt-2"
               />
             </motion.div>
           </motion.div>
         </section>
 
         {/* Featured Products with Modern Card Design */}
-        <section className="py-24 relative" ref={featuredSectionRef}>
+        <section className="py-24 relative bg-gray-50 dark:bg-gray-800" ref={featuredSectionRef}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-16 gsap-fadein">
-              <h2 className="text-4xl font-bold text-primary-light mb-6 font-arabic">
-                Latest Fashion
+              <h2 className="text-5xl font-bold text-blue-600 dark:text-blue-400 mb-6">
+                Trending Gadgets
               </h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-secondary to-secondary-light mx-auto rounded-full"></div>
+              <div className="w-40 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto rounded-full"></div>
             </div>
             <FeaturedProducts />
           </div>
         </section>
 
         {/* Categories with Enhanced Design */}
-        <section className="py-24" ref={categoriesSectionRef}>
+        <section className="py-24 bg-white dark:bg-gray-900" ref={categoriesSectionRef}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-16 gsap-fadein">
-              <h2 className="text-4xl font-bold text-primary-light mb-6 font-arabic">
-                Browse by Category
+              <h2 className="text-5xl font-bold text-blue-600 dark:text-blue-400 mb-6">
+                Shop by Category
               </h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-secondary to-secondary-light mx-auto rounded-full"></div>
+              <div className="w-40 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto rounded-full"></div>
             </div>
             <CategoriesShowcase />
           </div>
@@ -308,12 +308,12 @@ const HomePage: React.FC = () => {
         
         {/* Why Choose Us Section with Enhanced Design */}
         <section
-          className="py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-300"
+          className="py-24 bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-gray-900 relative overflow-hidden transition-colors duration-300"
           ref={whyChooseUsSectionRef}
         >
           {/* Animated background elements */}
           <motion.div
-            className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
+            className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
             animate={{
               x: [0, 100, 0],
               y: [0, 50, 0],
@@ -326,7 +326,7 @@ const HomePage: React.FC = () => {
             }}
           />
           <motion.div
-            className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-3xl"
+            className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-3xl"
             animate={{
               x: [0, -100, 0],
               y: [0, -50, 0],
@@ -347,13 +347,13 @@ const HomePage: React.FC = () => {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-5xl font-bold text-primary-light mb-6 font-arabic dark:text-primary-light transition-colors duration-300">
-                Why Choose Fitrah?
+              <h2 className="text-5xl font-bold text-blue-600 dark:text-blue-400 mb-6">
+                Why Choose TechTrend?
               </h2>
               <motion.div 
-                className="w-32 h-1 bg-gradient-to-r from-secondary to-secondary-light mx-auto rounded-full"
+                className="w-40 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto rounded-full"
                 initial={{ width: 0 }}
-                whileInView={{ width: 128 }}
+                whileInView={{ width: 160 }}
                 transition={{ duration: 1, delay: 0.3 }}
                 viewport={{ once: true }}
               />
@@ -363,24 +363,24 @@ const HomePage: React.FC = () => {
               {[
                 {
                   icon: "M5 13l4 4L19 7",
-                  title: "Premium Quality",
-                  description: "We carefully select our materials to ensure the highest quality and maximum comfort in use",
+                  title: "Cutting-Edge Technology",
+                  description: "Explore the latest innovations in electronics with top-tier performance and reliability",
                   color: "from-blue-500 to-blue-600",
                   bgColor: "from-blue-50 to-blue-100",
                   darkBgColor: "from-blue-900/20 to-blue-800/20"
                 },
                 {
                   icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1",
-                  title: "Affordable Prices",
-                  description: "We offer competitive prices and ongoing discounts to provide the best value for our customers",
+                  title: "Best Value Deals",
+                  description: "Get premium electronics at competitive prices with exclusive offers and discounts",
                   color: "from-green-500 to-green-600",
                   bgColor: "from-green-50 to-green-100",
                   darkBgColor: "from-green-900/20 to-green-800/20"
                 },
                 {
                   icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
-                  title: "Safe Shopping",
-                  description: "Shop with confidence with multiple payment options and security and flexible return policy",
+                  title: "Secure Shopping",
+                  description: "Shop confidently with secure payments, fast shipping, and hassle-free returns",
                   color: "from-purple-500 to-purple-600",
                   bgColor: "from-purple-50 to-purple-100",
                   darkBgColor: "from-purple-900/20 to-purple-800/20"
@@ -416,7 +416,7 @@ const HomePage: React.FC = () => {
                     
                     {/* Floating particles */}
                     <motion.div
-                      className="absolute top-4 right-4 w-2 h-2 bg-primary/30 rounded-full"
+                      className="absolute top-4 right-4 w-2 h-2 bg-blue-500/30 rounded-full"
                       animate={{
                         y: [0, -10, 0],
                         opacity: [0.3, 1, 0.3],
@@ -428,7 +428,7 @@ const HomePage: React.FC = () => {
                       }}
                     />
                     <motion.div
-                      className="absolute bottom-4 left-4 w-1 h-1 bg-secondary/40 rounded-full"
+                      className="absolute bottom-4 left-4 w-1 h-1 bg-cyan-500/40 rounded-full"
                       animate={{
                         y: [0, 8, 0],
                         opacity: [0.4, 1, 0.4],
@@ -475,7 +475,7 @@ const HomePage: React.FC = () => {
                     {/* Content */}
                     <div className="relative z-10 text-center">
                       <motion.h3 
-                        className="text-2xl font-bold mb-4 text-gray-900 dark:text-white transition-colors duration-300 font-arabic"
+                        className="text-2xl font-bold mb-4 text-gray-900 dark:text-white transition-colors duration-300"
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.2 }}
                       >
@@ -514,18 +514,18 @@ const HomePage: React.FC = () => {
               viewport={{ once: true }}
             >
               <motion.div
-                className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full border border-primary/20"
+                className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full border border-blue-500/20"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
                 <motion.div
-                  className="w-3 h-3 bg-primary rounded-full"
+                  className="w-3 h-3 bg-blue-500 rounded-full"
                   animate={{ scale: [1, 1.5, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
-                <span className="text-primary font-semibold">We're here to serve you 24/7</span>
+                <span className="text-blue-600 dark:text-blue-400 font-semibold">Your Tech, Our Passion - 24/7 Support</span>
                 <motion.div
-                  className="w-3 h-3 bg-secondary rounded-full"
+                  className="w-3 h-3 bg-cyan-500 rounded-full"
                   animate={{ scale: [1, 1.5, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
                 />
