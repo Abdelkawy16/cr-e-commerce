@@ -65,10 +65,8 @@ const ProductDetailPage: React.FC = () => {
         
         if (productData) {
           setProduct(productData);
-          // Set initial active image to the first image
           setActiveImageIndex(0);
           
-          // Fetch category
           if (productData.categoryId) {
             const categoryData = await getCategoryById(productData.categoryId);
             setCategory(categoryData);
@@ -85,7 +83,6 @@ const ProductDetailPage: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-    // Animate main image
     if (mainImageRef.current) {
       gsap.fromTo(
         mainImageRef.current,
@@ -93,7 +90,6 @@ const ProductDetailPage: React.FC = () => {
         { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
       );
     }
-    // Animate thumbnails
     if (thumbnailsRef.current) {
       gsap.fromTo(
         thumbnailsRef.current.children,
@@ -101,7 +97,6 @@ const ProductDetailPage: React.FC = () => {
         { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out', delay: 0.3 }
       );
     }
-    // Animate info section on scroll
     if (infoRef.current) {
       gsap.fromTo(
         infoRef.current,
@@ -118,7 +113,6 @@ const ProductDetailPage: React.FC = () => {
         }
       );
     }
-    // Animate actions (add to cart, etc) on scroll
     if (actionsRef.current) {
       gsap.fromTo(
         actionsRef.current,
@@ -140,9 +134,6 @@ const ProductDetailPage: React.FC = () => {
   const handleAddToCart = () => {
     if (!product) return;
     
-
-    
-    // Ensure price is a number
     const price = typeof product.price === 'string' ? parseFloat(product.price) : (product.price || 0);
     const activeDiscount = getActiveDiscount(product);
     const finalPrice = activeDiscount ? calculateDiscountedPrice(price, activeDiscount) : price;
@@ -153,13 +144,12 @@ const ProductDetailPage: React.FC = () => {
       price: finalPrice,
       originalPrice: price,
       discountPercentage: activeDiscount || 0,
-      image: product.images?.[0] || product.image || '',
+      image: product.images?.[0] || product.image || 'https://via.placeholder.com/400x400?text=Product+Image',
       quantity,
-
       categoryId: product.categoryId
     });
     
-    toast.success('تمت إضافة المنتج إلى السلة');
+    toast.success('Product added to cart', { duration: 3000 });
   };
 
   const nextImage = () => {
@@ -178,9 +168,9 @@ const ProductDetailPage: React.FC = () => {
     try {
       const productUrl = `${window.location.origin}/product/${id}`;
       await navigator.clipboard.writeText(productUrl);
-      toast.success('تم نسخ رابط المنتج');
+      toast.success('Product link copied', { duration: 3000 });
     } catch (err) {
-      toast.error('حدث خطأ أثناء نسخ الرابط');
+      toast.error('Error copying link');
     }
   };
 
@@ -189,18 +179,22 @@ const ProductDetailPage: React.FC = () => {
       await navigator.clipboard.writeText(product?.name || '');
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
-      toast.success('تم نسخ اسم المنتج');
+      toast.success('Product name copied', { duration: 3000 });
     } catch (err) {
-      toast.error('حدث خطأ أثناء النسخ');
+      toast.error('Error copying name');
     }
   };
 
   if (loading) {
     return (
       <Layout>
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-6 py-16">
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-primary-light"></div>
+            <motion.div 
+              className="rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600 dark:border-blue-300"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+            />
           </div>
         </div>
       </Layout>
@@ -210,13 +204,21 @@ const ProductDetailPage: React.FC = () => {
   if (!product) {
     return (
       <Layout>
-        <div className="container mx-auto px-4 py-16 text-gray-900 dark:text-gray-100">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Product Not Found</h1>
-            <Link to="/products" className="mt-4 inline-block text-primary-light hover:text-primary-light-dark dark:text-primary-light dark:hover:text-secondary">
-              Back To Products
+        <div className="container mx-auto px-6 py-16 text-gray-900 dark:text-gray-100">
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-300 mb-4">Product Not Found</h1>
+            <Link 
+              to="/products" 
+              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 dark:bg-blue-700 text-white font-semibold rounded-full hover:bg-cyan-500 dark:hover:bg-cyan-600 transition-all duration-300"
+            >
+              Back to Products
             </Link>
-          </div>
+          </motion.div>
         </div>
       </Layout>
     );
@@ -227,7 +229,7 @@ const ProductDetailPage: React.FC = () => {
   return (
     <Layout>
       <motion.div 
-        className="container mx-auto px-4 py-16 text-gray-900 dark:text-gray-100"
+        className="container mx-auto px-6 py-16 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg text-gray-900 dark:text-gray-100"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -254,16 +256,18 @@ const ProductDetailPage: React.FC = () => {
                         title={product.name}
                         type={product.videoType}
                       />
-                      <button
+                      <motion.button
                         onClick={() => setShowVideo(false)}
                         className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 p-2 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-800 transition-colors z-10"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                       >
-                        <ChevronLeft className="w-6 h-6" />
-                      </button>
+                        <ChevronLeft className="w-6 h-6 text-blue-600 dark:text-blue-300" />
+                      </motion.button>
                     </div>
                   ) : (
                     <img
-                      src={images[activeImageIndex]}
+                      src={images[activeImageIndex] || 'https://via.placeholder.com/400x400?text=Product+Image'}
                       alt={product.name}
                       className="w-full h-full object-contain p-4"
                     />
@@ -279,14 +283,14 @@ const ProductDetailPage: React.FC = () => {
                           className="absolute top-4 left-4 z-20"
                         >
                           <div className="relative">
-                            <div className="bg-gradient-to-r from-red-500 via-red-600 to-pink-600 text-white text-xs px-3 py-2 rounded-lg font-bold shadow-xl transform -rotate-12 border-2 border-white">
+                            <div className="bg-gradient-to-r from-red-500 via-red-600 to-pink-600 text-white text-xs px-3 py-2 rounded-lg font-bold shadow-xl transform -rotate-12 border-2 border-white dark:border-gray-800">
                               <div className="flex flex-col items-center">
-                                <span className="text-[10px] leading-tight">خصم</span>
-                                <span className="text-sm font-black">{activeDiscount}%-</span>
+                                <span className="text-[10px] leading-tight">Discount</span>
+                                <span className="text-sm font-black">{activeDiscount}% OFF</span>
                               </div>
                             </div>
                             <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full animate-pulse shadow-lg"></div>
-                            <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-white rounded-full animate-ping"></div>
+                            <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-white dark:bg-gray-800 rounded-full animate-ping"></div>
                           </div>
                         </motion.div>
                       );
@@ -300,8 +304,8 @@ const ProductDetailPage: React.FC = () => {
                     {images.map((_, idx) => (
                       <span
                         key={idx}
-                        className={`w-2.5 h-2.5 rounded-full border border-primary-light dark:border-primary-dark transition-all ${
-                          idx === activeImageIndex ? 'bg-primary-light dark:bg-primary-dark' : 'bg-gray-200 dark:bg-gray-700'
+                        className={`w-2.5 h-2.5 rounded-full border border-blue-500 dark:border-blue-300 transition-all ${
+                          idx === activeImageIndex ? 'bg-blue-500 dark:bg-blue-300' : 'bg-gray-200 dark:bg-gray-700'
                         }`}
                       />
                     ))}
@@ -317,45 +321,49 @@ const ProductDetailPage: React.FC = () => {
               variants={itemVariants}
             >
               {images.map((image, index) => (
-                <button
+                <motion.button
                   key={index}
                   onClick={() => {
                     setShowVideo(false);
                     setActiveImageIndex(index);
                   }}
-                  className={`aspect-square rounded-xl overflow-hidden border-2 transition-all bg-gray-100 dark:bg-gray-700 transform hover:scale-105 ${
+                  className={`aspect-square rounded-xl overflow-hidden border-2 transition-all bg-gray-100 dark:bg-gray-800 transform hover:scale-105 ${
                     index === activeImageIndex && !showVideo
-                      ? 'border-primary dark:border-primary-light shadow-lg'
+                      ? 'border-blue-500 dark:border-blue-300 shadow-lg'
                       : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <img
-                    src={image}
+                    src={image || 'https://via.placeholder.com/100x100?text=Thumbnail'}
                     alt={`${product.name} - Image ${index + 1}`}
                     className="w-full h-full object-contain p-1"
                   />
-                </button>
+                </motion.button>
               ))}
               {product.video && (
-                <button
+                <motion.button
                   onClick={() => setShowVideo(!showVideo)}
-                  className={`aspect-square rounded-xl overflow-hidden border-2 transition-all bg-gray-100 dark:bg-gray-700 transform hover:scale-105 ${
+                  className={`aspect-square rounded-xl overflow-hidden border-2 transition-all bg-gray-100 dark:bg-gray-800 transform hover:scale-105 ${
                     showVideo
-                      ? 'border-primary dark:border-primary-light shadow-lg'
+                      ? 'border-blue-500 dark:border-blue-300 shadow-lg'
                       : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
                     <div className="w-12 h-12 bg-white/90 dark:bg-gray-800/90 rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform">
-                      <Play className="w-6 h-6 text-primary dark:text-primary-dark" />
+                      <Play className="w-6 h-6 text-blue-600 dark:text-blue-300" />
                     </div>
                   </div>
                   <img
-                    src={product.images?.[0] || product.image}
+                    src={product.images?.[0] || product.image || 'https://via.placeholder.com/100x100?text=Video'}
                     alt={`${product.name} - Video`}
                     className="w-full h-full object-contain p-1 opacity-50"
                   />
-                </button>
+                </motion.button>
               )}
             </motion.div>
           </motion.div>
@@ -365,29 +373,31 @@ const ProductDetailPage: React.FC = () => {
             <div>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{product.name}</h1>
-                  <button
+                  <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-300">{product.name}</h1>
+                  <motion.button
                     onClick={handleCopyName}
-                    className={`ml-2 p-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all ${copied ? 'ring-2 ring-primary' : ''}`}
-                    title="نسخ اسم المنتج"
+                    className={`ml-2 p-2 rounded-full border border-gray-200 dark:border-blue-800 bg-white/95 dark:bg-gray-800/95 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all ${copied ? 'ring-2 ring-blue-500 dark:ring-blue-300' : ''}`}
+                    title="Copy product name"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                   >
-                    <Copy className={`w-4 h-4 ${copied ? 'text-primary' : 'text-gray-500 dark:text-gray-300'}`} />
-                  </button>
+                    <Copy className={`w-4 h-4 ${copied ? 'text-blue-500 dark:text-blue-300' : 'text-gray-500 dark:text-gray-300'}`} />
+                  </motion.button>
                 </div>
                 <div className="flex gap-2">
                   <motion.button 
                     className={`p-2 rounded-full transition-colors ${
                       isFavorite(product.id)
-                        ? 'bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50'
-                        : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600'
+                        ? 'bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50'
+                        : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
                     }`}
                     onClick={() => {
                       if (isFavorite(product.id)) {
                         removeFromFavorites(product.id);
-                        toast.success('تمت إزالة المنتج من المفضلة');
+                        toast.success('Product removed from favorites', { duration: 3000 });
                       } else {
                         addToFavorites(product);
-                        toast.success('تمت إضافة المنتج إلى المفضلة');
+                        toast.success('Product added to favorites', { duration: 3000 });
                       }
                     }}
                     whileHover={{ scale: 1.1 }}
@@ -402,7 +412,7 @@ const ProductDetailPage: React.FC = () => {
                     />
                   </motion.button>
                   <motion.button 
-                    className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors"
+                    className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     onClick={handleShare}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -413,19 +423,20 @@ const ProductDetailPage: React.FC = () => {
               </div>
               <div className="flex items-center gap-2 mb-2">
                 {product.featured && (
-                  <span className="inline-block bg-secondary text-white text-xs px-3 py-1 rounded-full font-semibold shadow-sm">مميز</span>
+                  <span className="inline-block bg-blue-500 dark:bg-blue-700 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-sm">Featured</span>
                 )}
                 {product.brand && (
-                  <div
-                    className="inline-flex items-center text-[11px] font-medium bg-blue-500/10 dark:bg-blue-900/20 text-blue-500 dark:text-blue-500 px-2 py-0.5 rounded-full mr-1 hover:bg-blue-500/20 dark:hover:bg-blue-900/30 transition-colors"
+                  <Link
+                    to={`/products?brand=${product.brand}`}
+                    className="inline-flex items-center text-[11px] font-medium bg-blue-500/10 dark:bg-blue-900/20 text-blue-500 dark:text-blue-300 px-2 py-0.5 rounded-full mr-1 hover:bg-blue-500/20 dark:hover:bg-blue-900/30 transition-colors"
                   >
                     <span>{product.brand}</span>
-                  </div>
+                  </Link>
                 )}
                 {category && (
                   <Link
                     to={`/products?category=${category.id}`}
-                    className="inline-flex items-center text-[11px] font-medium bg-primary-light/10 dark:bg-primary-dark/20 text-primary-light dark:text-primary-light px-2 py-0.5 rounded-full mr-1 hover:bg-primary-light/20 dark:hover:bg-primary-dark/30 transition-colors"
+                    className="inline-flex items-center text-[11px] font-medium bg-blue-500/10 dark:bg-blue-900/20 text-blue-500 dark:text-blue-300 px-2 py-0.5 rounded-full mr-1 hover:bg-blue-500/20 dark:hover:bg-blue-900/30 transition-colors"
                   >
                     <span>{category.name}</span>
                   </Link>
@@ -435,7 +446,6 @@ const ProductDetailPage: React.FC = () => {
 
             <div className="flex items-center gap-4">
               {(() => {
-                // Ensure price is a number
                 const price = typeof product.price === 'string' ? parseFloat(product.price) : (product.price || 0);
                 const activeDiscount = getActiveDiscount(product);
                 const discountedPrice = activeDiscount ? calculateDiscountedPrice(price, activeDiscount) : null;
@@ -448,7 +458,7 @@ const ProductDetailPage: React.FC = () => {
                           <span className="text-2xl font-bold text-red-600 dark:text-red-400">
                             {discountedPrice.toFixed(2)} €
                           </span>
-                          <span className="text-lg font-medium text-gray-500 line-through dark:text-gray-400">
+                          <span className="text-lg font-medium text-gray-500 dark:text-gray-400 line-through">
                             {price.toFixed(2)} €
                           </span>
                         </div>
@@ -458,18 +468,18 @@ const ProductDetailPage: React.FC = () => {
                           transition={{ type: "spring", stiffness: 260, damping: 20 }}
                           className="relative"
                         >
-                          <div className="bg-gradient-to-r from-red-500 via-red-600 to-pink-600 text-white text-lg px-6 py-4 rounded-2xl font-bold shadow-2xl transform -rotate-12 border-4 border-white">
+                          <div className="bg-gradient-to-r from-red-500 via-red-600 to-pink-600 text-white text-lg px-6 py-4 rounded-2xl font-bold shadow-2xl transform -rotate-12 border-4 border-white dark:border-gray-800">
                             <div className="flex flex-col items-center">
-                              <span className="text-sm leading-tight">خصم</span>
-                              <span className="text-2xl font-black">{activeDiscount}%-</span>
+                              <span className="text-sm leading-tight">Discount</span>
+                              <span className="text-2xl font-black">{activeDiscount}% OFF</span>
                             </div>
                           </div>
                           <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-pulse shadow-lg"></div>
-                          <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-white rounded-full animate-ping"></div>
+                          <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-white dark:bg-gray-800 rounded-full animate-ping"></div>
                         </motion.div>
                       </>
                     ) : (
-                      <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                      <span className="text-2xl font-bold text-blue-600 dark:text-blue-300">
                         {price.toFixed(2)} €
                       </span>
                     )}
@@ -480,24 +490,25 @@ const ProductDetailPage: React.FC = () => {
 
             <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">{product.description}</p>
 
-
             {/* Quantity */}
-            <div>
-              <h3 className="text-base font-medium text-gray-900 mb-2 dark:text-gray-100">Quantity</h3>
+            <div ref={actionsRef}>
+              <h3 className="text-base font-medium text-blue-600 dark:text-blue-300 mb-2">Quantity</h3>
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+                <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-xl p-1">
                   <motion.button
                     onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                    className="p-2 rounded-lg bg-white dark:bg-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-500 transition-colors focus:ring-2 focus:ring-primary/40 dark:focus:ring-primary-dark/40"
-                    whileTap={{ scale: 0.93 }}
+                    className="p-2 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:ring-2 focus:ring-blue-500/40 dark:focus:ring-blue-300/40"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     -
                   </motion.button>
                   <span className="w-10 text-center font-medium text-gray-900 dark:text-gray-100 text-sm">{quantity}</span>
                   <motion.button
                     onClick={() => setQuantity((prev) => prev + 1)}
-                    className="p-2 rounded-lg bg-white dark:bg-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-500 transition-colors focus:ring-2 focus:ring-primary/40 dark:focus:ring-primary-dark/40"
-                    whileTap={{ scale: 0.93 }}
+                    className="p-2 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:ring-2 focus:ring-blue-500/40 dark:focus:ring-blue-300/40"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     +
                   </motion.button>
@@ -508,11 +519,11 @@ const ProductDetailPage: React.FC = () => {
 
             <motion.button
               onClick={handleAddToCart}
-              className="flex items-center justify-center gap-2 w-full px-6 py-3 text-base font-medium rounded-xl text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:bg-primary-dark dark:hover:bg-primary-light dark:focus:ring-primary-light shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02]"
+              className="flex items-center justify-center gap-2 w-full px-6 py-3 text-base font-semibold rounded-xl text-white bg-blue-600 dark:bg-blue-700 hover:bg-cyan-500 dark:hover:bg-cyan-600 shadow-lg hover:shadow-xl transition-all duration-300"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              Add to cart
+              Add to Cart
               <ShoppingCart size={20} />
             </motion.button>
           </motion.div>
