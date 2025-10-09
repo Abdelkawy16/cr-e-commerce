@@ -71,30 +71,30 @@ const Header: React.FC = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center group">
               <h1 ref={logoRef} className="text-2xl font-bold text-gradient group-hover:scale-105 transition-transform">
-                فِـــــــــطــــــــــــرة
+                Fitrah
               </h1>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav ref={navLinksRef} className="hidden md:flex items-center space-x-6 space-x-reverse">
+            <nav ref={navLinksRef} className="hidden md:flex items-center gap-6">
               <Link to="/" className="nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors">
-                الرئيسية
+                Home
               </Link>
               <Link to="/categories" className="nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors">
-                الأنواع
+                Categories
               </Link>
               <Link to="/products" className="nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors">
-                المنتجات
+                Products
               </Link>
               {currentUser?.isAdmin && (
                 <Link to="/admin" className="nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors">
-                  لوحة التحكم
+                  Dashboard
                 </Link>
               )}
             </nav>
 
             {/* User Actions */}
-            <div className="flex items-center space-x-4 space-x-reverse">
+            <div className="flex items-center gap-4">
               {/* Theme Toggle */}
               <button 
                 onClick={toggleTheme}
@@ -133,16 +133,13 @@ const Header: React.FC = () => {
               </button>
 
               {currentUser ? (
-                <div className="hidden md:flex items-center space-x-4 space-x-reverse text-gray-700 dark:text-gray-200">
-                  <span className="text-gray-700 dark:text-gray-200">
-                    <User className="h-6 w-6 text-gray-700 dark:text-gray-200" />
-                  </span>
+                <div className="hidden md:flex items-center gap-6" dir="ltr">
                   <button 
                     onClick={handleLogout}
                     className="flex items-center text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
                   >
                     <LogOut className="h-5 w-5 ml-1" />
-                    تسجيل الخروج
+                    Logout
                   </button>
                 </div>
               ) : (
@@ -172,21 +169,21 @@ const Header: React.FC = () => {
                 className="mobile-nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
                 onClick={toggleMenu}
               >
-                الرئيسية
+                Home
               </Link>
               <Link 
                 to="/categories" 
                 className="mobile-nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
                 onClick={toggleMenu}
               >
-                الأنواع
+                Categories
               </Link>
               <Link 
                 to="/products" 
                 className="mobile-nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
                 onClick={toggleMenu}
               >
-                المنتجات
+                Products
               </Link>
               {currentUser?.isAdmin && (
                 <Link 
@@ -194,14 +191,14 @@ const Header: React.FC = () => {
                   className="mobile-nav-link text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
                   onClick={toggleMenu}
                 >
-                  لوحة التحكم
+                  Dashboard
                 </Link>
               )}
               {currentUser ? (
                 <>
                   <div className="mobile-nav-link text-gray-700 dark:text-gray-200 flex items-center">
                     <User className="h-6 w-6 ml-2" />
-                    <span>حسابي</span>
+                    <span>My Account</span>
                   </div>
                   <button 
                     onClick={() => {
@@ -211,7 +208,7 @@ const Header: React.FC = () => {
                     className="mobile-nav-link w-full text-right text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
                   >
                     <LogOut className="inline-block h-5 w-5 ml-1" />
-                    تسجيل الخروج
+                    Logout
                   </button>
                 </>
               ) : (

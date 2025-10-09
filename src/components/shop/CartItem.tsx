@@ -54,25 +54,25 @@ const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onUpdateQuantity })
           <div className="text-xs text-gray-500 space-y-0.5 dark:text-gray-400">
             {item.selectedSize && (
               <p className="flex items-center gap-1">
-                <span className="font-medium">المقاس:</span>
+                <span className="font-medium">Size:</span>
                 <span className="bg-gray-100 px-1 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300 transition-colors duration-300 text-xs">{item.selectedSize}</span>
               </p>
             )}
             {item.selectedColor && (
               <p className="flex items-center gap-1">
-                <span className="font-medium">اللون:</span>
+                <span className="font-medium">Color:</span>
                 <span className="bg-gray-100 px-1 py-0.5 rounded text-xs dark:bg-gray-700 dark:text-gray-300 transition-colors duration-300">{item.selectedColor}</span>
               </p>
             )}
             <div className="flex items-center gap-1 mt-1">
-              <span className="font-medium">السعر:</span>
+              <span className="font-medium">Price:</span>
               {item.discountPercentage ? (
                 <div className="flex items-center gap-1">
                   <span className="text-primary-light font-medium dark:text-primary-light transition-colors duration-300">
-                    {price.toFixed(2)} ج.م
+                    {price.toFixed(2)} EGP
                   </span>
                   <span className="text-gray-400 line-through text-xs dark:text-gray-500">
-                    {item.originalPrice.toFixed(2)} ج.م
+                    {item.originalPrice.toFixed(2)} EGP
                   </span>
                 </div>
               ) : (
@@ -103,8 +103,8 @@ const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onUpdateQuantity })
             </button>
           </div>
           <div className="text-right">
-            <span className="text-xs text-gray-500 dark:text-gray-400">المجموع:</span>
-            <span className="block font-bold text-primary-light dark:text-primary-light transition-colors duration-300 text-sm">{subtotal.toFixed(2)} ج.م</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">Subtotal:</span>
+            <span className="block font-bold text-primary-light dark:text-primary-light transition-colors duration-300 text-sm">{subtotal.toFixed(2)} EGP</span>
           </div>
         </div>
       </div>

@@ -223,23 +223,23 @@ const HomePage: React.FC = () => {
             >
               <motion.h1
                 ref={heroTitleRef}
-                className="text-7xl font-bold mb-6 font-arabic leading-tight"
+                className="text-7xl font-bold mb-6 leading-tight"
                 style={{ opacity: 0 }}
                 variants={heroItem}
               >
-                أزياء إسلامية بلمسة عصرية
+                Islamic Fashion with a Modern Touch
               </motion.h1>
               <motion.p
                 ref={heroSubtitleRef}
-                className="text-2xl mb-8 leading-relaxed max-w-2xl ml-auto"
+                className="text-2xl mb-8 leading-relaxed max-w-2xl"
                 style={{ opacity: 0 }}
                 variants={heroItem}
               >
-                تشكيلة مميزة من الملابس المحتشمة للنساء بأحدث التصاميم والألوان
+                A unique collection of modest women's clothing with the latest designs and colors
               </motion.p>
               <motion.div
                 ref={heroButtonsRef}
-                className="flex justify-end gap-4"
+                className="flex justify-start gap-4"
                 style={{ opacity: 0 }}
                 variants={heroItem}
               >
@@ -247,14 +247,14 @@ const HomePage: React.FC = () => {
                   <button
                     className="bg-primary hover:bg-primary-dark text-white px-10 py-4 rounded-full text-xl font-semibold transition-all duration-300 shadow-lg"
                   >
-                    تسوق الآن
+                    Shop Now
                   </button>
                 </Link>
                 <Link to="/categories">
                   <button
                     className="bg-white/30 hover:bg-white/40 text-white px-10 py-4 rounded-full text-xl font-semibold transition-all duration-300 backdrop-blur-sm"
                   >
-                    اكتشف الأقسام
+                    Browse Categories
                   </button>
                 </Link>
               </motion.div>
@@ -285,7 +285,7 @@ const HomePage: React.FC = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16 gsap-fadein">
               <h2 className="text-4xl font-bold text-primary-light mb-6 font-arabic">
-                أحدث الأزياء
+                Latest Fashion
               </h2>
               <div className="w-32 h-1 bg-gradient-to-r from-secondary to-secondary-light mx-auto rounded-full"></div>
             </div>
@@ -298,7 +298,7 @@ const HomePage: React.FC = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16 gsap-fadein">
               <h2 className="text-4xl font-bold text-primary-light mb-6 font-arabic">
-                تصفح حسب القسم
+                Browse by Category
               </h2>
               <div className="w-32 h-1 bg-gradient-to-r from-secondary to-secondary-light mx-auto rounded-full"></div>
             </div>
@@ -348,7 +348,7 @@ const HomePage: React.FC = () => {
               className="text-center mb-16"
             >
               <h2 className="text-5xl font-bold text-primary-light mb-6 font-arabic dark:text-primary-light transition-colors duration-300">
-                لماذا تختار فِطرة؟
+                Why Choose Fitrah?
               </h2>
               <motion.div 
                 className="w-32 h-1 bg-gradient-to-r from-secondary to-secondary-light mx-auto rounded-full"
@@ -523,7 +523,7 @@ const HomePage: React.FC = () => {
                   animate={{ scale: [1, 1.5, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
-                <span className="text-primary font-semibold">نحن هنا لخدمتك على مدار الساعة</span>
+                <span className="text-primary font-semibold">We're here to serve you 24/7</span>
                 <motion.div
                   className="w-3 h-3 bg-secondary rounded-full"
                   animate={{ scale: [1, 1.5, 1] }}

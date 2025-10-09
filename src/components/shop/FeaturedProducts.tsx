@@ -79,7 +79,7 @@ const FeaturedProducts: React.FC = () => {
         className="flex justify-between items-center mb-8"
         variants={itemVariants}
       >
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 transition-colors duration-300">منتجات مميزة</h2>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 transition-colors duration-300">Featured Products</h2>
         <motion.div
           whileHover={{ x: -5 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -88,7 +88,7 @@ const FeaturedProducts: React.FC = () => {
             to="/products" 
             className="flex items-center text-primary-light hover:text-primary-light-dark transition-colors dark:text-primary-light dark:hover:text-secondary"
           >
-            عرض الكل
+            View All
             <ChevronLeft className="h-5 w-5 mr-1" />
           </Link>
         </motion.div>
@@ -98,7 +98,7 @@ const FeaturedProducts: React.FC = () => {
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         variants={containerVariants}
       >
-        {products.map((product, index) => (
+        {products.map((product) => (
           <motion.div
             key={product.id}
             variants={itemVariants}

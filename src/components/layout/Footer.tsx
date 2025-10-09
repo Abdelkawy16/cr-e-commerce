@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Mail, MapPin, Instagram, Facebook } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -9,9 +9,9 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-xl font-bold mb-4 text-white dark:text-gray-100">فِطرة </h3>
+            <h3 className="text-xl font-bold mb-4 text-white dark:text-gray-100">Fitrah</h3>
             <p className="mb-4 text-white/80 dark:text-gray-300">
-              متجر متخصص في الأزياء الإسلامية للنساء. نقدم تشكيلة واسعة من الملابس المحتشمة عالية الجودة بأحدث التصاميم والألوان.
+              A specialized store in Islamic fashion for women. We offer a wide range of high-quality modest clothing with the latest designs and colors.
             </p>
             <div className="flex space-x-4 space-x-reverse">
               <a href="https://www.facebook.com/profile.php?id=61576759931560" target="_blank" className="hover:text-secondary transition-colors">
@@ -28,31 +28,31 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-4 text-white dark:text-gray-100">روابط سريعة</h3>
+            <h3 className="text-xl font-bold mb-4 text-white dark:text-gray-100">Quick Links</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/" className="hover:text-secondary transition-colors text-white/80 dark:text-gray-300">
-                  الرئيسية
+                  Home
                 </Link>
               </li>
               <li>
                 <Link to="/products" className="hover:text-secondary transition-colors text-white/80 dark:text-gray-300">
-                  المنتجات
+                  Products
                 </Link>
               </li>
               <li>
                 <Link to="/categories" className="hover:text-secondary transition-colors text-white/80 dark:text-gray-300">
-                  الأقسام
+                  Categories
                 </Link>
               </li>
               <li>
                 <Link to="/cart" className="hover:text-secondary transition-colors text-white/80 dark:text-gray-300">
-                  السلة
+                  Cart
                 </Link>
               </li>
               <li>
                 <Link to="/collections" className="hover:text-secondary transition-colors text-white/80 dark:text-gray-300">
-                  المجموعات الجديدة
+                  Collections
                 </Link>
               </li>
             </ul>
@@ -60,7 +60,7 @@ const Footer: React.FC = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="text-xl font-bold mb-4 text-white dark:text-gray-100">تواصل معانا</h3>
+            <h3 className="text-xl font-bold mb-4 text-white dark:text-gray-100">Contact</h3>
             <ul className="space-y-2 text-white/80 dark:text-gray-300">
               {/* <li className="flex items-center">
                 <Phone size={20} className="ml-2" />
@@ -72,14 +72,14 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <MapPin size={20} className="ml-2" />
-                <span>الدلتا - مصر</span>
+                <span>Delta, Egypt</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-white/20 mt-8 pt-4 text-center dark:border-gray-600">
-          <p className="text-white/80 dark:text-gray-300">&copy; {new Date().getFullYear()} فِطرة - جميع الحقوق محفوظة</p>
+        <div className="border-t border-white/10 pt-6 mt-8 text-center text-sm text-white/60 dark:text-gray-400">
+          <p>© {new Date().getFullYear()} Fitrah. All rights reserved.</p>
         </div>
       </div>
     </footer>
