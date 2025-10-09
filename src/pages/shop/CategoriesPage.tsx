@@ -41,7 +41,7 @@ const CategoriesPage: React.FC = () => {
     <Layout>
       <div className="bg-gray-100 py-8 dark:bg-gray-900 transition-colors duration-300">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold text-gray-800 mb-8 dark:text-gray-100 transition-colors duration-300">تصفح الفئات</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-8 dark:text-gray-100 transition-colors duration-300">Browse Categories</h1>
           
           {categories.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -51,7 +51,7 @@ const CategoriesPage: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-xl text-gray-600 dark:text-gray-300">لا توجد فئات متاحة حالياً</p>
+              <p className="text-xl text-gray-600 dark:text-gray-300">No products match your search</p>
             </div>
           )}
         </div>

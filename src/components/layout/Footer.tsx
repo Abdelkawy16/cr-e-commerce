@@ -14,10 +14,10 @@ const Footer: React.FC = () => {
               A specialized store in Islamic fashion for women. We offer a wide range of high-quality modest clothing with the latest designs and colors.
             </p>
             <div className="flex space-x-4 space-x-reverse">
-              <a href="https://www.facebook.com/profile.php?id=61576759931560" target="_blank" className="hover:text-secondary transition-colors">
+              <a href="#" target="_blank" className="hover:text-secondary transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="https://www.instagram.com/fetra_98" target="_blank" className="hover:text-secondary transition-colors">
+              <a href="#" target="_blank" className="hover:text-secondary transition-colors">
                 <Instagram size={20} />
               </a>
               {/* <a href="#" className="hover:text-secondary transition-colors">
@@ -48,11 +48,6 @@ const Footer: React.FC = () => {
               <li>
                 <Link to="/cart" className="hover:text-secondary transition-colors text-white/80 dark:text-gray-300">
                   Cart
-                </Link>
-              </li>
-              <li>
-                <Link to="/collections" className="hover:text-secondary transition-colors text-white/80 dark:text-gray-300">
-                  Collections
                 </Link>
               </li>
             </ul>

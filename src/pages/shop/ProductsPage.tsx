@@ -61,7 +61,7 @@ const ProductsPage: React.FC = () => {
     <Layout>
       <div className="bg-gray-100 py-8 dark:bg-gray-900 transition-colors duration-300">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold text-gray-800 mb-8 dark:text-gray-100 transition-colors duration-300">جميع المنتجات</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-8 dark:text-gray-100 transition-colors duration-300">All Products</h1>
           
           {/* Search and Filters */}
           <div className="mb-8">
@@ -69,7 +69,7 @@ const ProductsPage: React.FC = () => {
               <div className="relative flex-grow">
                 <input
                   type="text"
-                  placeholder="ابحث عن منتج..."
+                  placeholder="Search for a product..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full py-2 px-10 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
@@ -82,7 +82,7 @@ const ProductsPage: React.FC = () => {
                 className="md:hidden flex items-center justify-center gap-2 py-2 px-4 bg-white border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
               >
                 <Filter size={20} />
-                <span>الفلاتر</span>
+                <span>Filters</span>
               </button>
               
               <div className="hidden md:block">
@@ -91,7 +91,7 @@ const ProductsPage: React.FC = () => {
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   className="py-2 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
                 >
-                  <option value="">جميع الفئات</option>
+                  <option value="">All Categories</option>
                   {categories.map(category => (
                     <option key={category.id} value={category.id} className="dark:bg-gray-700 dark:text-gray-200">
                       {category.name}
@@ -105,13 +105,13 @@ const ProductsPage: React.FC = () => {
             {showFilters && (
               <div className="md:hidden bg-white p-4 rounded-md shadow-md mb-4 dark:bg-gray-800">
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2 dark:text-gray-300">الفئة</label>
+                  <label className="block text-gray-700 mb-2 dark:text-gray-300">Category</label>
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                     className="w-full py-2 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-primary-light"
                   >
-                    <option value="">جميع الفئات</option>
+                    <option value="">All Categories</option>
                     {categories.map(category => (
                       <option key={category.id} value={category.id} className="dark:bg-gray-700 dark:text-gray-200">
                         {category.name}
@@ -132,7 +132,7 @@ const ProductsPage: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-xl text-gray-600 dark:text-gray-300">لا توجد منتجات متطابقة مع البحث</p>
+              <p className="text-xl text-gray-600 dark:text-gray-300">No products match your search</p>
             </div>
           )}
         </div>
