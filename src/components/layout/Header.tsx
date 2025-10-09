@@ -70,7 +70,7 @@ const Header: React.FC = () => {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <Link to="/" className="flex items-center group">
-              <h1 ref={logoRef} className="text-2xl font-bold text-gradient group-hover:scale-105 transition-transform">
+              <h1 ref={logoRef} className="text-2xl font-bold group-hover:scale-105 transition-transform">
                 Fitrah
               </h1>
             </Link>
@@ -133,13 +133,12 @@ const Header: React.FC = () => {
               </button>
 
               {currentUser ? (
-                <div className="hidden md:flex items-center gap-6" dir="ltr">
+                <div className="hidden md:flex items-center gap-6" dir="ltr" title='logout'>
                   <button 
                     onClick={handleLogout}
                     className="flex items-center text-gray-700 dark:text-gray-200 hover:text-primary-light dark:hover:text-secondary transition-colors"
                   >
                     <LogOut className="h-5 w-5 ml-1" />
-                    Logout
                   </button>
                 </div>
               ) : (

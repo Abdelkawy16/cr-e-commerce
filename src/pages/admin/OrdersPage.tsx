@@ -305,7 +305,7 @@ const OrdersPage: React.FC = () => {
       ? cleanNumber.slice(1)
       : cleanNumber;
     // Add Egypt's country code
-    return `20${numberWithoutZero}`;
+    return `+385${numberWithoutZero}`;
   };
 
   // Handle select all orders
@@ -410,7 +410,7 @@ const OrdersPage: React.FC = () => {
                 إجمالي المبيعات المكتملة
               </p>
               <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                {stats.totalRevenue.toFixed(2)} ج.م
+                {stats.totalRevenue.toFixed(2)} €
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {stats.ordersByStatus.received} طلب مكتمل
@@ -503,7 +503,7 @@ const OrdersPage: React.FC = () => {
                       {order.customer.name}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {order.total.toFixed(2)} ج.م
+                      {order.total.toFixed(2)} €
                     </p>
                   </div>
                 </div>
@@ -639,7 +639,7 @@ const OrdersPage: React.FC = () => {
                   </div>
                   <div className="flex justify-between items-center">
                     <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                      {order.total.toFixed(2)} ج.م
+                      {order.total.toFixed(2)} €
                     </div>
                     <div
                       className="flex gap-2"
@@ -775,7 +775,7 @@ const OrdersPage: React.FC = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                    {order.total.toFixed(2)} ج.م
+                    {order.total.toFixed(2)} €
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {getStatusBadge(order.status)}
@@ -918,7 +918,7 @@ const OrdersPage: React.FC = () => {
                             0
                           )
                           .toFixed(2)}{" "}
-                        ج.م
+                        €
                       </span>
                     </div>
                     <div className="flex justify-between">
@@ -934,7 +934,7 @@ const OrdersPage: React.FC = () => {
                             0
                           )
                         ).toFixed(2)}{" "}
-                        ج.م
+                        €
                       </span>
                     </div>
                     <div className="flex justify-between border-t border-gray-200 dark:border-gray-600 pt-2 mt-2">
@@ -942,7 +942,7 @@ const OrdersPage: React.FC = () => {
                         الإجمالي الكلي:
                       </span>
                       <span className="font-medium text-gray-900 dark:text-gray-100">
-                        {selectedOrder.total.toFixed(2)} ج.م
+                        {selectedOrder.total.toFixed(2)} €
                       </span>
                     </div>
                   </div>
@@ -1086,7 +1086,7 @@ const OrdersPage: React.FC = () => {
                             <span>الكمية: {item.quantity}</span>
                           </div>
                           <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mt-1">
-                            {Number(item.price).toFixed(2)} ج.م
+                            {Number(item.price).toFixed(2)} €
                           </div>
                         </div>
                       </div>

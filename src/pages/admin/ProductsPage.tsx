@@ -446,17 +446,17 @@ const ProductsPage: React.FC = () => {
                                 {discountedPrice ? (
                                   <>
                                     <span className="text-red-600 font-medium">
-                                      {discountedPrice.toFixed(2)} ج.م
+                                      {discountedPrice.toFixed(2)} €
                                     </span>
                                     <span className="line-through text-gray-400">
-                                      {price.toFixed(2)} ج.م
+                                      {price.toFixed(2)} €
                                     </span>
                                     <span className="bg-red-500 text-white text-xs px-1 py-0.5 rounded-full">
                                       -{activeDiscount}%
                                     </span>
                                   </>
                                 ) : (
-                                  <span>{price.toFixed(2)} ج.م</span>
+                                  <span>{price.toFixed(2)} €</span>
                                 )}
                               </div>
                             );
@@ -541,17 +541,17 @@ const ProductsPage: React.FC = () => {
                                     {discountedPrice ? (
                                       <>
                                         <span className="text-red-600 font-medium">
-                                          {discountedPrice.toFixed(2)} ج.م
+                                          {discountedPrice.toFixed(2)} €
                                         </span>
                                         <span className="line-through text-gray-400">
-                                          {price.toFixed(2)} ج.م
+                                          {price.toFixed(2)} €
                                         </span>
                                         <span className="bg-red-500 text-white text-xs px-1 py-0.5 rounded-full">
                                           -{activeDiscount}%
                                         </span>
                                       </>
                                     ) : (
-                                      <span>{price.toFixed(2)} ج.م</span>
+                                      <span>{price.toFixed(2)} €</span>
                                     )}
                                   </div>
                                 );
@@ -637,7 +637,7 @@ const ProductsPage: React.FC = () => {
                   ></textarea>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">السعر (ج.م)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">السعر (€)</label>
                   <input
                     type="number"
                     name="price"

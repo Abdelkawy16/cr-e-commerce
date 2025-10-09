@@ -69,15 +69,15 @@ const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onUpdateQuantity })
               {item.discountPercentage ? (
                 <div className="flex items-center gap-1">
                   <span className="text-primary-light font-medium dark:text-primary-light transition-colors duration-300">
-                    {price.toFixed(2)} EGP
+                    {price.toFixed(2)} €
                   </span>
                   <span className="text-gray-400 line-through text-xs dark:text-gray-500">
-                    {item.originalPrice.toFixed(2)} EGP
+                    {item.originalPrice.toFixed(2)} €
                   </span>
                 </div>
               ) : (
                 <span className="text-primary-light font-medium dark:text-primary-light transition-colors duration-300">
-                  {price.toFixed(2)} ج.م
+                  {price.toFixed(2)} €
                 </span>
               )}
             </div>
@@ -104,7 +104,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onUpdateQuantity })
           </div>
           <div className="text-right">
             <span className="text-xs text-gray-500 dark:text-gray-400">Subtotal:</span>
-            <span className="block font-bold text-primary-light dark:text-primary-light transition-colors duration-300 text-sm">{subtotal.toFixed(2)} EGP</span>
+            <span className="block font-bold text-primary-light dark:text-primary-light transition-colors duration-300 text-sm">{subtotal.toFixed(2)} €</span>
           </div>
         </div>
       </div>

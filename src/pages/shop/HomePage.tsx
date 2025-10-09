@@ -363,24 +363,24 @@ const HomePage: React.FC = () => {
               {[
                 {
                   icon: "M5 13l4 4L19 7",
-                  title: "جودة عالية",
-                  description: "نختار بعناية خاماتنا لتكون الأفضل جودة وأكثر راحة في الاستخدام",
+                  title: "Premium Quality",
+                  description: "We carefully select our materials to ensure the highest quality and maximum comfort in use",
                   color: "from-blue-500 to-blue-600",
                   bgColor: "from-blue-50 to-blue-100",
                   darkBgColor: "from-blue-900/20 to-blue-800/20"
                 },
                 {
                   icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1",
-                  title: "سعر رخيص",
-                  description: "نقدم أسعار تنافسية وتخفيضات مستمرة لتوفير أفضل قيمة لعملائنا",
+                  title: "Affordable Prices",
+                  description: "We offer competitive prices and ongoing discounts to provide the best value for our customers",
                   color: "from-green-500 to-green-600",
                   bgColor: "from-green-50 to-green-100",
                   darkBgColor: "from-green-900/20 to-green-800/20"
                 },
                 {
                   icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
-                  title: "تسوق آمن",
-                  description: "تسوق بثقة مع خيارات دفع متعددة وآمنة وسياسة إرجاع مرنة",
+                  title: "Safe Shopping",
+                  description: "Shop with confidence with multiple payment options and security and flexible return policy",
                   color: "from-purple-500 to-purple-600",
                   bgColor: "from-purple-50 to-purple-100",
                   darkBgColor: "from-purple-900/20 to-purple-800/20"

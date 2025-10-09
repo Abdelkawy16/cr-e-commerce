@@ -446,10 +446,10 @@ const ProductDetailPage: React.FC = () => {
                       <>
                         <div className="flex flex-col">
                           <span className="text-2xl font-bold text-red-600 dark:text-red-400">
-                            {discountedPrice.toFixed(2)} ج.م
+                            {discountedPrice.toFixed(2)} €
                           </span>
                           <span className="text-lg font-medium text-gray-500 line-through dark:text-gray-400">
-                            {price.toFixed(2)} ج.م
+                            {price.toFixed(2)} €
                           </span>
                         </div>
                         <motion.div
@@ -470,7 +470,7 @@ const ProductDetailPage: React.FC = () => {
                       </>
                     ) : (
                       <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                        {price.toFixed(2)} ج.م
+                        {price.toFixed(2)} €
                       </span>
                     )}
                   </>

@@ -59,7 +59,7 @@ const CheckoutPage: React.FC = () => {
               {/* Products */}
               <div className="space-y-4 mb-6">
                 {cartItems.map((item) => (
-                  <div key={`${item.productId}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-4 text-gray-900 dark:text-gray-100">
+                  <div key={`${item.productId}`} className="flex gap-4 text-gray-900 dark:text-gray-100">
                     <img 
                       src={item.image} 
                       alt={item.name} 
@@ -67,15 +67,10 @@ const CheckoutPage: React.FC = () => {
                     />
                     <div className="flex-1">
                       <h3 className="font-semibold">{item.name}</h3>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">
-                        <span>Size: {item.selectedSize}</span>
-                        <span className="mx-2">|</span>
-                        <span>Color: {item.selectedColor}</span>
-                      </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-semibold">{(item.price * item.quantity).toFixed(2)} EGP</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">{item.quantity} × {item.price} EGP</div>
+                      <div className="font-semibold">{(item.price * item.quantity).toFixed(2)} €</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">{item.quantity} × {item.price} €</div>
                     </div>
                   </div>
                 ))}
@@ -85,13 +80,13 @@ const CheckoutPage: React.FC = () => {
               <div className="space-y-2 border-t border-gray-200 pt-4 dark:border-gray-700">
                 <div className="flex justify-between text-gray-600 dark:text-gray-300">
                   <span>Subtotal</span>
-                  <span>{subtotal.toFixed(2)} EGP</span>
+                  <span>{subtotal.toFixed(2)} €</span>
                 </div>
                 
                 <div className="border-t pt-2 dark:border-gray-700">
                   <div className="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span>{total.toFixed(2)} EGP</span>
+                    <span>{total.toFixed(2)} €</span>
                   </div>
                 </div>
               </div>

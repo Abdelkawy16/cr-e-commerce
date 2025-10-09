@@ -95,11 +95,11 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
                 <div className="space-y-2">
                   <div className="flex justify-between text-gray-600 dark:text-gray-400">
                     <span>Subtotal</span>
-                    <span className="font-medium">{subtotal.toFixed(2)} EGP</span>
+                    <span className="font-medium">{subtotal.toFixed(2)} €</span>
                   </div>
                   <div className="flex justify-between text-lg font-bold text-gray-900 dark:text-gray-100 pt-2 border-t border-gray-200 dark:border-gray-700">
                     <span>Total</span>
-                    <span>{total.toFixed(2)} EGP</span>
+                    <span>{total.toFixed(2)} €</span>
                   </div>
                 </div>
 

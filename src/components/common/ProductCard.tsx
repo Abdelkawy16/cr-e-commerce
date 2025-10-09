@@ -157,15 +157,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   {discountedPrice ? (
                     <div className="flex flex-col">
                       <span className="text-primary-light font-bold text-lg dark:text-primary-light transition-colors duration-300">
-                        {discountedPrice.toFixed(2)} ج.م
+                        {discountedPrice.toFixed(2)} €
                       </span>
                       <span className="text-gray-500 line-through text-sm dark:text-gray-400">
-                        {price.toFixed(2)} ج.م
+                        {price.toFixed(2)} €
                       </span>
                     </div>
                   ) : (
                     <span className="text-primary-light font-bold text-lg dark:text-primary-light transition-colors duration-300">
-                      {price.toFixed(2)} ج.م
+                      {price.toFixed(2)} €
                     </span>
                   )}
                 </div>

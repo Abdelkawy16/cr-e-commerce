@@ -133,13 +133,13 @@ const CartPage: React.FC = () => {
                 <div className="space-y-4">
                   <div className="flex justify-between text-gray-600 dark:text-gray-300">
                     <span>Subtotal</span>
-                    <span>{subtotal.toFixed(2)} ج.م</span>
+                    <span>{subtotal.toFixed(2)} €</span>
                   </div>
 
                   <div className="border-t pt-4 dark:border-gray-700">
                     <div className="flex justify-between font-bold text-lg">
                       <span>Total</span>
-                      <span>{total.toFixed(2)} ج.م</span>
+                      <span>{total.toFixed(2)} €</span>
                     </div>
                   </div>
 

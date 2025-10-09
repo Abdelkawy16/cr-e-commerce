@@ -100,7 +100,7 @@ const DashboardPage: React.FC = () => {
                   </div>
                   <div className="mr-3">
                     <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{product.name}</div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">{product.price} ج.م</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">{product.price} €</div>
                   </div>
                 </div>
                 <div className="flex justify-between items-center text-sm">
@@ -157,7 +157,7 @@ const DashboardPage: React.FC = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      {product.price} ج.م
+                      {product.price} €
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                       {category?.name || 'غير محدد'}
